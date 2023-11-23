@@ -14,6 +14,7 @@ public class TableroRepository : ITableroRepository
             connection.Open();
             var command = new SQLiteCommand(query, connection);
 
+            // la consigna pedía asumir que el usuario propietario es el mismo, por eso envío un 1
             command.Parameters.Add(new SQLiteParameter("@idUserProp", 1));
             command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
             command.Parameters.Add(new SQLiteParameter("@desc", tab.Descripcion));
