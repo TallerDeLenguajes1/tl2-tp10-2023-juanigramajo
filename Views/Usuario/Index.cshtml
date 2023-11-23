@@ -21,8 +21,8 @@
                 <td hidden>@user.Id</td>
                 <td>@user.NombreDeUsuario</td>
                 <td>
-                    <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@user.Id">Editar</a>
-                    <a asp-controller="Usuario" asp-action="DeleteUsuario" asp-route-idUsuario="@user.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el usuario?')">Eliminar</a>                      
+                    <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@user.Id" class="btn btn-info">Editar</a>
+                    <a asp-controller="Usuario" asp-action="DeleteUsuario" asp-route-idUsuario="@user.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el usuario?')" class="btn btn-outline-danger">Eliminar</a>                      
                 </td>
             </tr>
         }

@@ -48,7 +48,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
     
 
         [HttpGet]
-        public IActionResult EditarUsuario(int idUsuario, Usuario user)
+        public IActionResult EditarUsuario(int idUsuario)
         {
             return View(repositorioUsuario.GetById(idUsuario));
         }
@@ -58,7 +58,6 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         public IActionResult EditarUsuario(Usuario usuario)
         {
             var usuario2 = repositorioUsuario.GetById(usuario.Id);
-            usuario2.Id = usuario.Id;
             usuario2.NombreDeUsuario = usuario.NombreDeUsuario;
             
             repositorioUsuario.Update(usuario.Id, usuario2);
