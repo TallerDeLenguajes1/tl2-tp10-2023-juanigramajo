@@ -6,19 +6,29 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 {
     public class UsuarioController : Controller
     {
-        private static List<Usuario> ListUsuarios = new List<Usuario>();
+        private IUsuarioRepository repositorioUsuario;
         private readonly ILogger<UsuarioController> _logger;
 
 
         public UsuarioController(ILogger<UsuarioController> logger)
         {
             _logger = logger;
+            repositorioUsuario = new UsuarioRepository();
         }
 
 
         public IActionResult Index()
         {
-            return View(ListUsuarios);
+            List<Usuario> ListadoUsuarios = repositorioUsuario.List();
+
+            if (ListadoUsuarios != null)
+            {
+                return View(ListadoUsuarios);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
 
@@ -32,36 +42,36 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(Usuario usuario)
         {   
-            usuario.Id = ListUsuarios.Count()+1;
-            ListUsuarios.Add(usuario);
+            repositorioUsuario.Create(usuario);
             return RedirectToAction("Index");
         }
     
 
         [HttpGet]
-        public IActionResult EditarUsuario(int idUsuario)
-        {  
-            return View(ListUsuarios.FirstOrDefault(usuario => usuario.Id == idUsuario));
+        public IActionResult EditarUsuario(int idUsuario, Usuario user)
+        {
+            return View(repositorioUsuario.GetById(idUsuario));
         }
 
 
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
-        {   
-            
-            var usuario2 = ListUsuarios.FirstOrDefault( producto => producto.Id == producto.Id);
+        {
+            var usuario2 = repositorioUsuario.GetById(usuario.Id);
             usuario2.Id = usuario.Id;
             usuario2.NombreDeUsuario = usuario.NombreDeUsuario;
+            
+            repositorioUsuario.Update(usuario.Id, usuario2);
 
             return RedirectToAction("Index");
         }
 
         
         public IActionResult DeleteUsuario(int idUsuario)
-        {  
-        var usuarioBuscado = ListUsuarios.FirstOrDefault( usuario => usuario.Id == idUsuario);
-        ListUsuarios.Remove(usuarioBuscado);
-        return RedirectToAction("Index");
+        {
+            repositorioUsuario.Remove(idUsuario);
+
+            return RedirectToAction("Index");
         }
 
 
