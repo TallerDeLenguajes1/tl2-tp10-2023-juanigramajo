@@ -8,13 +8,14 @@ public class UsuarioRepository : IUsuarioRepository
     // Crear un nuevo usuario. (recibe un objeto Usuario).
     public void Create(Usuario usuario)
     {   
-        var query = $"INSERT INTO Usuario (nombre_de_usuario, rol_del_usuario) VALUES (@nombreDeUsuario, @rolDelUsuario)";
+        var query = $"INSERT INTO Usuario (nombre_de_usuario, password, rol_del_usuario) VALUES (@nombreDeUsuario, @contra, @rolDelUsuario)";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
 
             command.Parameters.Add(new SQLiteParameter("@nombreDeUsuario", usuario.NombreDeUsuario));
+             command.Parameters.Add(new SQLiteParameter("@contra", usuario.Password));
             command.Parameters.Add(new SQLiteParameter("@rolDelUsuario", (Rol)(Convert.ToInt32(usuario.RolDelUsuario))));
 
             command.ExecuteNonQuery();
@@ -63,6 +64,7 @@ public class UsuarioRepository : IUsuarioRepository
                     var user = new Usuario();
                     user.Id = Convert.ToInt32(reader["id"]);
                     user.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                    user.Password = reader["password"].ToString();
                     user.RolDelUsuario = (Rol)(Convert.ToInt32(reader["rol_del_usuario"]));
                     ListaUsuarios.Add(user);
                 }
@@ -94,6 +96,7 @@ public class UsuarioRepository : IUsuarioRepository
             {
                 user.Id = Convert.ToInt32(reader["id"]);
                 user.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                user.Password = reader["password"].ToString();
                 user.RolDelUsuario = (Rol)(Convert.ToInt32(reader["rol_del_usuario"]));
             }
         }
