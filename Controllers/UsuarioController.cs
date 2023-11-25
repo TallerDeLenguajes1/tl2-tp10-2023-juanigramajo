@@ -22,8 +22,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
 
+            string rolUsuario = HttpContext.Session.GetString("Rol");
+
             if (ListadoUsuarios != null)
             {
+                ViewBag.Rol = rolUsuario;
                 return View(ListadoUsuarios);
             }
             else

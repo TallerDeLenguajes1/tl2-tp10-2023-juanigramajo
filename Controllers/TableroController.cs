@@ -21,12 +21,15 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         {
             if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
 
+            string rolUsuario = HttpContext.Session.GetString("Rol");
+
             if(isAdmin())
             {
                 List<Tablero> ListadoTableros = repositorioTablero.List();
 
                 if (ListadoTableros != null)
                 {
+                    ViewBag.Rol = rolUsuario;
                     return View(ListadoTableros);
                 }
                 else
@@ -40,6 +43,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
                 if (ListadoTableros != null)
                 {
+                    ViewBag.Rol = rolUsuario;
                     return View(ListadoTableros);
                 }
                 else

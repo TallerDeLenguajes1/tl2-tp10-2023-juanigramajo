@@ -23,10 +23,18 @@
                 <td>@user.NombreDeUsuario</td>
                 <td>@user.RolDelUsuario</td>
                 <td>
-                    <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@user.Id" class="btn btn-info">Editar</a>
-                    <a asp-controller="Usuario" asp-action="DeleteUsuario" asp-route-idUsuario="@user.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el usuario?')" class="btn btn-outline-danger">Eliminar</a>                      
+                    @if (ViewBag.Rol == "Administrador")
+                    {
+                        <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@user.Id" class="btn btn-info">Editar</a>
+                        <a asp-controller="Usuario" asp-action="DeleteUsuario" asp-route-idUsuario="@user.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el usuario?')" class="btn btn-outline-danger">Eliminar</a>                      
+                    } else
+                    {
+                        <span class="text-danger">No tienes permiso para editar o eliminar usuarios.</span>
+                    }    
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+

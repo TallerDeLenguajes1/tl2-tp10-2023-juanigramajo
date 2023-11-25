@@ -3,10 +3,6 @@
 ---
 
 ## Detalles punto 3
-- Si el usuario no es administrador, los botones de editar y eliminar no funcionan
-    - el editar redirecciona al listado.
-    - el eliminar pregunta si esta seguro pero no elimina nada.
-- Se podrían ocultar esos botones
 - Mostrar mensaje de loggearse o no tener permisos al intentar acceder a un view.
 
 ---
@@ -17,3 +13,4 @@
     - (segunda solucion momentanea, poner el selected en el primer valor)
 - LoginController/loggearUsuario sobre almacenar en sesión la contraseña
 - Por qué en el Views/Login/@model tengo que mandarle una ruta específica y los demas models no
+- Si es buena práctica hacer la funcion isLogged y isAdmin por cada controller, o hay una forma mejor
