@@ -2,13 +2,12 @@
 
 ---
 
-## Falta del punto 3
-- Configurar los permisos segun Rol.
-
-## FALTA MODIFICAR (porque con el punto siguiente corroboro qué rol debe tener el usuario para poder modificar otro):
-
-- UsuarioControler/EditarUsuario
-- UsuarioRepository/Update
+## Detalles punto 3
+- Si el usuario no es administrador, los botones de editar y eliminar no funcionan
+    - el editar redirecciona al listado.
+    - el eliminar pregunta si esta seguro pero no elimina nada.
+- Se podrían ocultar esos botones
+- Mostrar mensaje de loggearse o no tener permisos al intentar acceder a un view.
 
 ---
 

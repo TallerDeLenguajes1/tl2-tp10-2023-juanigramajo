@@ -14,6 +14,11 @@
     </div>
 
     <div class="mb-3" class="form-group">
+        <label asp-for="@Model.Password" class="form-label"></label>
+        <input asp-for="@Model.Password" class="form-control"/>
+    </div>
+
+    <div class="mb-3" class="form-group">
         <label asp-for="@Model.RolDelUsuario" class="form-label"></label>
         <select asp-for="@Model.RolDelUsuario" class="form-select" aria-label="Default select example">
             <option value="Administrador">Administrador</option>

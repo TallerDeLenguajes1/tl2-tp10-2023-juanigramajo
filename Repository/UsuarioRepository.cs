@@ -28,13 +28,15 @@ public class UsuarioRepository : IUsuarioRepository
     // Modificar un usuario existente. (recibe un Id y un objeto Usuario).
     public void Update(int ID, Usuario usuario)
     {
-        var query = $"UPDATE Usuario SET nombre_de_usuario = @nombreDeUsuario WHERE id = @idcambiar;";
+        var query = $"UPDATE Usuario SET nombre_de_usuario = @nombreDeUsuario, password = @contra, rol_del_usuario = @rolDelUsuario WHERE id = @idcambiar;";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
 
             command.Parameters.Add(new SQLiteParameter("@nombreDeUsuario", usuario.NombreDeUsuario));
+            command.Parameters.Add(new SQLiteParameter("@contra", usuario.Password));
+            command.Parameters.Add(new SQLiteParameter("@rolDelUsuario", usuario.RolDelUsuario));
             command.Parameters.Add(new SQLiteParameter("@idcambiar", ID));
 
             command.ExecuteNonQuery();

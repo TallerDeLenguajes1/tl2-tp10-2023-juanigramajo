@@ -19,6 +19,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
         public IActionResult Index()
         {
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
 
             if (ListadoUsuarios != null)
@@ -35,6 +36,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {   
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if(!isAdmin()) return RedirectToAction("Index");
             return View(new Usuario());
         }
 
@@ -42,6 +45,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(Usuario usuario)
         {   
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if(!isAdmin()) return RedirectToAction("Index");
+            if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
             repositorioUsuario.Create(usuario);
             return RedirectToAction("Index");
         }
@@ -50,6 +56,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult EditarUsuario(int idUsuario)
         {
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if(!isAdmin()) return RedirectToAction("Index");
             return View(repositorioUsuario.GetById(idUsuario));
         }
 
@@ -57,6 +65,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(Usuario usuario)
         {
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if(!isAdmin()) return RedirectToAction("Index");
+            if(!ModelState.IsValid) return RedirectToAction("EditarUsuario");
             var usuario2 = repositorioUsuario.GetById(usuario.Id);
             usuario2.NombreDeUsuario = usuario.NombreDeUsuario;
             
@@ -68,9 +79,29 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         
         public IActionResult DeleteUsuario(int idUsuario)
         {
+            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if(!isAdmin()) return RedirectToAction("Index");
             repositorioUsuario.Remove(idUsuario);
 
             return RedirectToAction("Index");
+        }
+
+
+        private bool isLogged()
+        {
+            if (HttpContext.Session.GetString("Id") != null) 
+                return true;
+                
+            return false;
+        }
+
+
+        private bool isAdmin()
+        {
+            if (HttpContext.Session.GetString("Rol") == "Administrador") 
+                return true;
+                
+            return false;
         }
 
 

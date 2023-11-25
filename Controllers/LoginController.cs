@@ -43,6 +43,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
         private void loggearUsuario(Usuario usuario)
         {
+            HttpContext.Session.SetString("Id", usuario.Id.ToString());
             HttpContext.Session.SetString("NombreDeUsuario", usuario.NombreDeUsuario);
             // HttpContext.Session.SetString("Contraseña", usuario.Password);
             HttpContext.Session.SetString("Rol", usuario.RolDelUsuario.ToString());
