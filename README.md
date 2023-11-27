@@ -2,11 +2,6 @@
 
 ---
 
-## Detalles punto 3
-- Mostrar mensaje de loggearse o no tener permisos al intentar acceder a un view.
-
----
-
 ## Consultar:
 - Problema del selected en los formularios de editar tarea y usuario (estado y rol)
     - (solucion momentanea, quitar el selected del editar usuario)

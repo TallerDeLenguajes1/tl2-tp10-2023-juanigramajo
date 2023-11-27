@@ -19,7 +19,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
         public IActionResult Index()
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
 
             string rolUsuario = HttpContext.Session.GetString("Rol");
 
@@ -57,8 +61,13 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearTablero()
         {   
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
+
             return View(new Tablero());
         }
 
@@ -66,9 +75,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult CrearTablero(Tablero tablero)
         {   
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("CrearTablero");
+
             repositorioTablero.Create(tablero);
             return RedirectToAction("Index");
         }
@@ -77,8 +91,13 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult EditarTablero(int idTablero)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
+
             return View(repositorioTablero.GetById(idTablero));
         }
 
@@ -86,7 +105,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult EditarTablero(Tablero tablero)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("EditarTablero");
 
@@ -102,7 +125,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         
         public IActionResult DeleteTablero(int idTablero)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
             
             repositorioTablero.Remove(idTablero);

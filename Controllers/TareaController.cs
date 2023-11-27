@@ -19,7 +19,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
         public IActionResult Index()
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
+
             List<Tarea> ListadoTareas = repositorioTarea.List();
 
             if (ListadoTareas != null)
@@ -36,7 +41,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearTarea()
         {   
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
+
             return View(new Tarea());
         }
 
@@ -44,8 +54,13 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult CrearTarea(Tarea tarea)
         {   
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!ModelState.IsValid) return RedirectToAction("CrearTarea");
+
             // la consigna pedía asumir que el tablero es el mismo, por eso envío un 1
             repositorioTarea.Create(1, tarea);
             return RedirectToAction("Index");
@@ -55,7 +70,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult EditarTarea(int idTarea)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
+            
             return View(repositorioTarea.GetById(idTarea));
         }
 
@@ -63,9 +83,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult EditarTarea(Tarea tarea)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("EditarTarea");
+
             var tarea2 = repositorioTarea.GetById(tarea.Id);
 
             tarea2.Nombre = tarea.Nombre;
@@ -81,7 +106,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         
         public IActionResult DeleteTarea(int idTarea)
         {
-            if(!isLogged()) return RedirectToRoute(new { controller = "Login", action = "Index"});
+            if (!isLogged())
+            {
+                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                return RedirectToRoute(new { controller = "Login", action = "Index" });
+            }
             repositorioTarea.Remove(idTarea);
 
             return RedirectToAction("Index");
