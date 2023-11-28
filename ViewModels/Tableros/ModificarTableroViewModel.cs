@@ -7,6 +7,9 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
 {
     public class ModificarTableroViewModel
     {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Este campo es requerido.")]
         [Display(Name = "Id del usuario propietario")] 
         public int IdUsuarioPropietario { get; set; }
 

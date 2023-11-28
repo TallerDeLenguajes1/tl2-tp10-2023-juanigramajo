@@ -1,3 +1,5 @@
+using tl2_tp10_2023_juanigramajo.Models;
+
 public interface ITableroRepository
 {
     public Tablero Create(Tablero tablero);

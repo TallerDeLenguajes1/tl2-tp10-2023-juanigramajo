@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
+using tl2_tp10_2023_juanigramajo.ViewModels.Tableros;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -27,28 +28,32 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
             string rolUsuario = HttpContext.Session.GetString("Rol");
 
-            if(isAdmin())
+            if(!isAdmin())
             {
-                List<Tablero> ListadoTableros = repositorioTablero.List();
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tablero> ListadoTableros = repositorioTablero.ListByUser(Convert.ToInt32(idUser));
+
+                ListarTablerosViewModel CrearTableroVM = new ListarTablerosViewModel(ListadoTableros);
 
                 if (ListadoTableros != null)
                 {
                     ViewBag.Rol = rolUsuario;
-                    return View(ListadoTableros);
+                    return View(CrearTableroVM);
                 }
                 else
                 {
                     return BadRequest();
                 }
-            } else 
+            } 
+            else 
             {
-                var idUser = HttpContext.Session.GetString("Id");
-                var ListadoTableros = repositorioTablero.ListByUser(Convert.ToInt32(idUser));
+                List<Tablero> ListadoTableros = repositorioTablero.List();
+                ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
 
                 if (ListadoTableros != null)
                 {
                     ViewBag.Rol = rolUsuario;
-                    return View(ListadoTableros);
+                    return View(listarTablerosVM);
                 }
                 else
                 {
@@ -72,12 +77,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(new Tablero());
+            return View(new CrearTableroViewModel());
         }
 
     
         [HttpPost]
-        public IActionResult CrearTablero(Tablero tablero)
+        public IActionResult CrearTablero(CrearTableroViewModel crearTableroVM)
         {   
             if (!isLogged())
             {
@@ -91,7 +96,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!ModelState.IsValid) return RedirectToAction("CrearTablero");
 
+
+            Tablero tablero = new Tablero(crearTableroVM);
             repositorioTablero.Create(tablero);
+
             return RedirectToAction("Index");
         }
     
@@ -110,12 +118,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(repositorioTablero.GetById(idTablero));
+            ModificarTableroViewModel modificarTableroVM = new ModificarTableroViewModel(repositorioTablero.GetById(idTablero));
+
+            return View(modificarTableroVM);
         }
 
 
         [HttpPost]
-        public IActionResult EditarTablero(Tablero tablero)
+        public IActionResult EditarTablero(ModificarTableroViewModel modificarTableroVM)
         {
             if (!isLogged())
             {
@@ -129,11 +139,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!ModelState.IsValid) return RedirectToAction("EditarTablero");
 
-            var tablero2 = repositorioTablero.GetById(tablero.Id);
-            tablero2.Nombre = tablero.Nombre;
-            tablero2.Descripcion = tablero.Descripcion;
-            
-            repositorioTablero.Update(tablero.Id, tablero2);
+            Tablero tablero2 = new Tablero(modificarTableroVM);
+            repositorioTablero.Update(tablero2.Id, tablero2);
 
             return RedirectToAction("Index");
         }
