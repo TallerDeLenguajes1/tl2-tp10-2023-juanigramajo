@@ -24,16 +24,33 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-
-            List<Tarea> ListadoTareas = repositorioTarea.List();
-
-            if (ListadoTareas != null)
+            
+            if (isAdmin())
             {
-                return View(ListadoTareas);
+                List<Tarea> ListadoTareas = repositorioTarea.List();
+
+                if (ListadoTareas != null)
+                {
+                    return View(ListadoTareas);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
+            else 
             {
-                return BadRequest();
+                var idUser = HttpContext.Session.GetInt32("Id");
+                List<Tarea> ListadoTareas = repositorioTarea.ListByUser((int)idUser);
+
+                if (ListadoTareas != null)
+                {
+                    return View(ListadoTareas);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
         }
 

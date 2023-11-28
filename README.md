@@ -4,9 +4,13 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
-- Si el usuario es administrador, no puede cambiar su propio rol a operador (o si cambia, pierde funcionalidades)
-- Si no es admin, no puede crear usuario admin, cargar directamente operador ((corregida))
+
+---
+
+## Preguntas de funcionalidades a resolver:
 - Si no esta loggeado y creo un usuario, login con ese usuario?
+- Si el usuario es administrador, no puede cambiar su propio rol a operador (o si cambia, pierde funcionalidades)
+- Si elimino el mismo usuario que esta loggeado? o no debería poder autoeliminar su usuario?
 
 ---
 
