@@ -9,3 +9,4 @@
 - LoginController/loggearUsuario sobre almacenar en sesión la contraseña
 - Por qué en el Views/Login/@model tengo que mandarle una ruta específica y los demas models no
 - Si es buena práctica hacer la funcion isLogged y isAdmin por cada controller, o hay una forma mejor
+- Sobre el viewBag, como se implementaría con otro viewModel

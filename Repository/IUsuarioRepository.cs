@@ -1,3 +1,5 @@
+using tl2_tp10_2023_juanigramajo.Models;
+
 public interface IUsuarioRepository
 {
     public void Create(Usuario usuario);
