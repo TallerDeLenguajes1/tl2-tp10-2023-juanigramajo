@@ -4,9 +4,9 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
-- Si el usuario es administrador, no puede cambiar su propio rol a operador
-- Si el usuario no tiene permisos no puede crear usuarios ni tareas, notificar eso con alerta
-- Si no esta loggeado ofrezco para crear un usuario, pero si no esta loggeado no puede crear tampoco ajsj corregir
+- Si el usuario es administrador, no puede cambiar su propio rol a operador (o si cambia, pierde funcionalidades)
+- Si no es admin, no puede crear usuario admin, cargar directamente operador ((corregida))
+- Si no esta loggeado y creo un usuario, login con ese usuario?
 
 ---
 
@@ -17,3 +17,4 @@
 - LoginController/loggearUsuario sobre almacenar en sesión la contraseña
 - Por qué en el Views/Login/@model tengo que mandarle una ruta específica y los demas models no
 - Sobre el viewBag, como se implementaría con otro viewModel
+- Si el usuario es administrador, no puede cambiar su propio rol a operador (o si cambia, pierde funcionalidades), cual es mejor?

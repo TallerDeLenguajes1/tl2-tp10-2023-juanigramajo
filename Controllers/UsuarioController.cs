@@ -46,13 +46,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {   
-            if (!isLogged())
-            {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
-            if(!isAdmin()) return RedirectToAction("Index");
-
+            string rolUsuario = HttpContext.Session.GetString("Rol");
+            ViewBag.Rol = rolUsuario;
+            
             return View(new CrearUsuarioViewModel());
         }
 
@@ -60,16 +56,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel crearUsuarioVM)
         {   
-            if (!isLogged())
-            {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
-            if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
 
             Usuario usuario = new Usuario(crearUsuarioVM);
             repositorioUsuario.Create(usuario);
+            
             return RedirectToAction("Index");
         }
     
@@ -82,7 +73,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
+                return RedirectToAction("Index");
+            }
 
             ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(repositorioUsuario.GetById(idUsuario));
 
@@ -98,7 +93,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
+                return RedirectToAction("Index");
+            }
             if(!ModelState.IsValid) return RedirectToAction("EditarUsuario");
 
 
@@ -116,7 +115,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para eliminar un usuario";
+                return RedirectToAction("Index");
+            }
 
             repositorioUsuario.Remove(idUsuario);
 

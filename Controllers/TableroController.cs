@@ -66,7 +66,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para crear un tablero";
+                return RedirectToAction("Index");
+            }
 
             return View(new Tablero());
         }
@@ -80,7 +84,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para crear un tablero";
+                return RedirectToAction("Index");
+            }
             if(!ModelState.IsValid) return RedirectToAction("CrearTablero");
 
             repositorioTablero.Create(tablero);
@@ -96,7 +104,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para editar un tablero";
+                return RedirectToAction("Index");
+            }
 
             return View(repositorioTablero.GetById(idTablero));
         }
@@ -110,7 +122,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para editar un tablero";
+                return RedirectToAction("Index");
+            }
             if(!ModelState.IsValid) return RedirectToAction("EditarTablero");
 
             var tablero2 = repositorioTablero.GetById(tablero.Id);
@@ -130,7 +146,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
+            if(!isAdmin())
+            {   
+                TempData["ErrorMessage"] = "No tienes permisos para eliminar un tablero";
+                return RedirectToAction("Index");
+            }
             
             repositorioTablero.Remove(idTablero);
 

@@ -88,7 +88,6 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("EditarTarea");
 
             var tarea2 = repositorioTarea.GetById(tarea.Id);

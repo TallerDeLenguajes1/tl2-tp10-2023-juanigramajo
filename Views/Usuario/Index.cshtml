@@ -4,6 +4,13 @@
 
 @model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.ListarUsuariosViewModel
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h2>Listado de Usuarios</h2>
 
 <table class="table table-success table-striped">

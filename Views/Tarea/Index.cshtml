@@ -4,6 +4,13 @@
 
 @model List<Tarea>
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h2>Listado de Tareas</h2>
 
 <table class="table table-success table-striped">
