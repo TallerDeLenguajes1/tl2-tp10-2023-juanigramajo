@@ -2,10 +2,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using tl2_tp10_2023_juanigramajo.Models;
 
-
-namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuario
+namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
 {
-    public class CrearUsuarioViewModel
+    public class ModificarUsuarioViewModel
     {
         [Required(ErrorMessage = "Este campo es requerido.")]
         [Display(Name = "Nombre de Usuario")]
@@ -22,14 +21,14 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuario
 
 
 
-        public CrearUsuarioViewModel(){            
+        public ModificarUsuarioViewModel(){            
 
         }
         
-        public CrearUsuarioViewModel(Usuario usuario){
-            NombreDeUsuario = usuario.NombreDeUsuario;
-            Password = usuario.Password;
-            RolDelUsuario = usuario.RolDelUsuario;
+        public ModificarUsuarioViewModel(Usuario usuario){
+            this.NombreDeUsuario = usuario.NombreDeUsuario;
+            this.Password = usuario.Password;
+            this.RolDelUsuario = usuario.RolDelUsuario;
         }
     }
 }
