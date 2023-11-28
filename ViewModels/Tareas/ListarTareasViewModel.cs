@@ -7,7 +7,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
 {
     public class ListarTareasViewModel
     {
-        private List<Tarea> ListadoTareas { get; set; }
+        public List<Tarea> ListadoTareas { get; set; }
 
 
         public ListarTareasViewModel(){

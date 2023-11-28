@@ -1,12 +1,8 @@
 
-@model Usuario
+@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.ModificarUsuarioViewModel
 
 <form asp-controller="Usuario" asp-action="EditarUsuario">
     <input hidden asp-for="@Model.Id">
-    <div class="mb-3" class="form-group">
-        <label asp-for="@Model.Id" class="form-label"></label>
-        <input asp-for="@Model.Id" class="form-control"/>
-    </div>
 
     <div class="mb-3" class="form-group">
         <label asp-for="@Model.NombreDeUsuario" class="form-label"></label>

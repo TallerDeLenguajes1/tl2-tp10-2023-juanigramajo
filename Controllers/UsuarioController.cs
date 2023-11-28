@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
+using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -26,13 +27,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
 
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
+            ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
 
             string rolUsuario = HttpContext.Session.GetString("Rol");
 
             if (ListadoUsuarios != null)
             {
                 ViewBag.Rol = rolUsuario;
-                return View(ListadoUsuarios);
+                return View(listarUsuariosVM);
             }
             else
             {
@@ -51,12 +53,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!isAdmin()) return RedirectToAction("Index");
 
-            return View(new Usuario());
+            return View(new CrearUsuarioViewModel());
         }
 
     
         [HttpPost]
-        public IActionResult CrearUsuario(Usuario usuario)
+        public IActionResult CrearUsuario(CrearUsuarioViewModel crearUsuarioVM)
         {   
             if (!isLogged())
             {
@@ -66,6 +68,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
 
+            Usuario usuario = new Usuario(crearUsuarioVM);
             repositorioUsuario.Create(usuario);
             return RedirectToAction("Index");
         }
@@ -81,12 +84,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!isAdmin()) return RedirectToAction("Index");
 
-            return View(repositorioUsuario.GetById(idUsuario));
+            ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(repositorioUsuario.GetById(idUsuario));
+
+            return View(modificarUsuarioVM);
         }
 
 
         [HttpPost]
-        public IActionResult EditarUsuario(Usuario usuario)
+        public IActionResult EditarUsuario(ModificarUsuarioViewModel modificarUsuarioVM)
         {
             if (!isLogged())
             {
@@ -95,11 +100,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!isAdmin()) return RedirectToAction("Index");
             if(!ModelState.IsValid) return RedirectToAction("EditarUsuario");
-            
-            var usuario2 = repositorioUsuario.GetById(usuario.Id);
-            usuario2.NombreDeUsuario = usuario.NombreDeUsuario;
-            
-            repositorioUsuario.Update(usuario.Id, usuario2);
+
+
+            Usuario usuario2 = new Usuario(modificarUsuarioVM);
+            repositorioUsuario.Update(usuario2.Id, usuario2);
 
             return RedirectToAction("Index");
         }

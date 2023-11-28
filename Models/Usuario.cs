@@ -1,3 +1,5 @@
+using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
+
 namespace tl2_tp10_2023_juanigramajo.Models
 {
     public enum Rol
@@ -12,5 +14,23 @@ namespace tl2_tp10_2023_juanigramajo.Models
         public string NombreDeUsuario { get; set; }
         public string Password { get; set; }
         public Rol RolDelUsuario { get; set; }
+
+
+        public Usuario() {
+        
+        }
+
+        public Usuario(CrearUsuarioViewModel crearUsuarioVM){
+            this.NombreDeUsuario = crearUsuarioVM.NombreDeUsuario;
+            this.Password = crearUsuarioVM.Password;
+            this.RolDelUsuario = crearUsuarioVM.RolDelUsuario;
+        }
+
+        public Usuario(ModificarUsuarioViewModel modificarUsuarioVM){
+            this.Id = modificarUsuarioVM.Id;
+            this.NombreDeUsuario = modificarUsuarioVM.NombreDeUsuario;
+            this.Password = modificarUsuarioVM.Password;
+            this.RolDelUsuario = modificarUsuarioVM.RolDelUsuario;
+        }
     }
 }

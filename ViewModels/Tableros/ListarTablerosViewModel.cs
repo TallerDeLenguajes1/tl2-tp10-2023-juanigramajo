@@ -7,7 +7,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
 {
     public class ListarTablerosViewModel
     {
-        private List<Tablero> ListadoTableros { get; set; }
+        public List<Tablero> ListadoTableros { get; set; }
 
 
         public ListarTablerosViewModel(){

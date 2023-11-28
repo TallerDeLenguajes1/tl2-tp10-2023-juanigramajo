@@ -6,7 +6,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
 {
     public class ListarUsuariosViewModel
     {
-        private List<Usuario> ListadoUsuarios { get; set; }
+        public List<Usuario> ListadoUsuarios { get; set; }
         
 
         public ListarUsuariosViewModel(){

@@ -4,6 +4,9 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
+- Si el usuario es administrador, no puede cambiar su propio rol a operador
+- Si el usuario no tiene permisos no puede crear usuarios ni tareas, notificar eso con alerta
+- Si no esta loggeado ofrezco para crear un usuario, pero si no esta loggeado no puede crear tampoco ajsj corregir
 
 ---
 
