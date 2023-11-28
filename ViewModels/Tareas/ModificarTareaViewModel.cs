@@ -7,6 +7,8 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
 {
     public class ModificarTareaViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Este campo es requerido.")]
         [Display(Name = "Id del tablero")]
         public int IdTablero { get; set; }
@@ -34,6 +36,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
         }
 
         public ModificarTareaViewModel(Tarea tarea){
+            this.Id = tarea.Id;
             this.IdTablero = tarea.IdTablero;
             this.Nombre = tarea.Nombre;
             this.Descripcion = tarea.Descripcion;

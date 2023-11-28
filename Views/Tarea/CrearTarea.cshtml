@@ -1,11 +1,7 @@
 
-@model Tarea
+@model tl2_tp10_2023_juanigramajo.ViewModels.Tareas.CrearTareaViewModel
 
 <form asp-controller="Tarea" asp-action="CrearTarea">
-    <div class="mb-3" class="form-group">
-        <label asp-for="@Model.Id" class="form-label"></label>
-        <input asp-for="@Model.Id" class="form-control"/>
-    </div>
 
     <div class="mb-3" class="form-group">
         <label asp-for="@Model.Nombre" class="form-label"></label>

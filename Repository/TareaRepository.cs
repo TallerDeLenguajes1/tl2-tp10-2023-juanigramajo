@@ -1,4 +1,5 @@
 using System.Data.SQLite;
+using tl2_tp10_2023_juanigramajo.Models;
 
 public class TareaRepository : ITareaRepository
 {

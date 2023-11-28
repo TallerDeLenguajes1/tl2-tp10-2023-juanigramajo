@@ -37,7 +37,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             } else
             {
                 loggearUsuario(usuarioLoggeado);
-                return RedirectToRoute(new { controller = "Home", action = "Index"});
+                var nombre = HttpContext.Session.GetString("NombreDeUsuario");
+                ViewBag.Nombre = nombre;
+                return View("~/Views/Home/Index.cshtml");
             }
         }
 

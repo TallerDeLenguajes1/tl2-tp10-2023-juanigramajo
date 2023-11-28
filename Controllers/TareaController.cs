@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
+using tl2_tp10_2023_juanigramajo.ViewModels.Tareas;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -24,14 +25,15 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
-            
-            if (isAdmin())
+            if (!isAdmin())
             {
-                List<Tarea> ListadoTareas = repositorioTarea.List();
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tarea> ListadoTareas = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
 
                 if (ListadoTareas != null)
                 {
-                    return View(ListadoTareas);
+                    return View(ListarTareasVM);
                 }
                 else
                 {
@@ -40,12 +42,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             else 
             {
-                var idUser = HttpContext.Session.GetInt32("Id");
-                List<Tarea> ListadoTareas = repositorioTarea.ListByUser((int)idUser);
+                List<Tarea> ListadoTareas = repositorioTarea.List();
+                ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
 
                 if (ListadoTareas != null)
                 {
-                    return View(ListadoTareas);
+                    return View(ListarTareasVM);
                 }
                 else
                 {
@@ -64,12 +66,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
 
-            return View(new Tarea());
+            return View(new CrearTareaViewModel());
         }
 
     
         [HttpPost]
-        public IActionResult CrearTarea(Tarea tarea)
+        public IActionResult CrearTarea(CrearTareaViewModel crearTareaVM)
         {   
             if (!isLogged())
             {
@@ -78,8 +80,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             if(!ModelState.IsValid) return RedirectToAction("CrearTarea");
 
+            Tarea tarea = new Tarea(crearTareaVM);
+
             // la consigna pedía asumir que el tablero es el mismo, por eso envío un 1
             repositorioTarea.Create(1, tarea);
+
             return RedirectToAction("Index");
         }
     
@@ -92,29 +97,49 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
+            if (!isAdmin())
+            {
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == idTarea);
+                
+                if (tarea == null)
+                {
+                    TempData["ErrorMessage"] = "No tienes permisos para editar esta tarea";
+                    return RedirectToAction("Index");
+                }
+            }
             
-            return View(repositorioTarea.GetById(idTarea));
+            ModificarTareaViewModel modificarTareaVM = new ModificarTareaViewModel(repositorioTarea.GetById(idTarea));
+            
+            return View(modificarTareaVM);
         }
 
 
         [HttpPost]
-        public IActionResult EditarTarea(Tarea tarea)
+        public IActionResult EditarTarea(ModificarTareaViewModel modificarTareaVM)
         {
             if (!isLogged())
             {
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
+            if (!isAdmin())
+            {
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == modificarTareaVM.Id);
+                
+                if (tarea == null)
+                {
+                    TempData["ErrorMessage"] = "No tienes permisos para editar esta tarea";
+                    return RedirectToAction("Index");
+                }
+            }
             if(!ModelState.IsValid) return RedirectToAction("EditarTarea");
 
-            var tarea2 = repositorioTarea.GetById(tarea.Id);
-
-            tarea2.Nombre = tarea.Nombre;
-            tarea2.Descripcion = tarea.Descripcion;
-            tarea2.Color = tarea.Color;
-            tarea2.Estado = tarea.Estado;
-            
-            repositorioTarea.Update(tarea.Id, tarea2);
+            Tarea tarea2 = new Tarea(modificarTareaVM);
+            repositorioTarea.Update(tarea2.Id, tarea2);
 
             return RedirectToAction("Index");
         }
@@ -127,6 +152,19 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
+            if (!isAdmin())
+            {
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == idTarea);
+                
+                if (tarea == null)
+                {
+                    TempData["ErrorMessage"] = "No tienes permisos para editar esta tarea";
+                    return RedirectToAction("Index");
+                }
+            }
+            
             repositorioTarea.Remove(idTarea);
 
             return RedirectToAction("Index");

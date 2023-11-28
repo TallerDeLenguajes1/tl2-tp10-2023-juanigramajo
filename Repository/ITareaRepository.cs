@@ -1,3 +1,5 @@
+using tl2_tp10_2023_juanigramajo.Models;
+
 public interface ITareaRepository
 {
     public Tarea Create(int idTab, Tarea tarea);
