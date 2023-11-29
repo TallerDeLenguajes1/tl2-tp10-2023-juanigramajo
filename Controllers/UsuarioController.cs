@@ -30,10 +30,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
 
             string rolUsuario = HttpContext.Session.GetString("Rol");
+            string nombreDeUsuario = HttpContext.Session.GetString("NombreDeUsuario");
 
             if (ListadoUsuarios != null)
             {
                 ViewBag.Rol = rolUsuario;
+                ViewBag.Nombre = nombreDeUsuario;
                 return View(listarUsuariosVM);
             }
             else
@@ -80,6 +82,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
 
             ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(repositorioUsuario.GetById(idUsuario));
+            string rolUsuario = HttpContext.Session.GetString("Rol");
+            string nombreDeUsuario = HttpContext.Session.GetString("NombreDeUsuario");
+            ViewBag.Rol = rolUsuario;
+            ViewBag.Nombre = nombreDeUsuario;
 
             return View(modificarUsuarioVM);
         }

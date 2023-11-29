@@ -14,13 +14,21 @@
         <input asp-for="@Model.Password" class="form-control"/>
     </div>
 
-    <div class="mb-3" class="form-group">
-        <label asp-for="@Model.RolDelUsuario" class="form-label"></label>
-        <select asp-for="@Model.RolDelUsuario" class="form-select" aria-label="Default select example">
-            <option value="Administrador">Administrador</option>
-            <option value="Operador">Operador</option>
-        </select>
-    </div>
+    @if (ViewBag.Rol == "Administrador" && ViewBag.Nombre == Model.NombreDeUsuario)
+    {
+        <div>
+            <span class="text-danger">No puedes bajar tu propio rango a uno distinto de administrador.</span>
+        </div>
+    } else
+    {
+        <div class="mb-3" class="form-group">
+            <label asp-for="@Model.RolDelUsuario" class="form-label"></label>
+            <select asp-for="@Model.RolDelUsuario" class="form-select" aria-label="Default select example">
+                <option value="Administrador">Administrador</option>
+                <option value="Operador">Operador</option>
+            </select>
+        </div>
+    }
 
     <button type="submit" class="btn btn-info">Editar</button>
 </form>
