@@ -6,11 +6,17 @@
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
 - Si el usuario es administrador, no puede cambiar su propio rol a operador NO DEBE AUTOMODIFICARSE
 - Un usuario no debería poder autoeliminar su usuario
+- El nombre del usuario unicamente se muestra cuando recien se loguea (por el viewBag), cuando abro el home de otro lado no se muestra
 
 ---
 
 ## Preguntas de funcionalidades a resolver (no importante o necesario):
 - Si no esta loggeado y creo un usuario, login con ese usuario?
+
+---
+
+## Se puede agregar:
+- Cerrar sesión
 
 ---
 
