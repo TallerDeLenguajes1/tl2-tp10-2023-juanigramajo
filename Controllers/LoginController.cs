@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
 using tl2_tp10_2023_juanigramajo.ViewModels;
+using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -20,15 +21,15 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
          public IActionResult Index()
         {
-            return View(new LoginViewModel());
+            return View(new HerramientasUsuariosViewModel());
         }
 
 
         [HttpPost]
-        public IActionResult Login(Usuario usuario)
+        public IActionResult Login(HerramientasUsuariosViewModel HerramientaUsuarioVM)
         {
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
-            Usuario usuarioLoggeado = ListadoUsuarios.FirstOrDefault(user => user.NombreDeUsuario == usuario.NombreDeUsuario && user.Password == usuario.Password);
+            Usuario usuarioLoggeado = ListadoUsuarios.FirstOrDefault(user => user.NombreDeUsuario == HerramientaUsuarioVM.LoginVM.NombreDeUsuario && user.Password == HerramientaUsuarioVM.LoginVM.Password);
 
             if (usuarioLoggeado == null)
             {
@@ -36,19 +37,20 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             } else
             {
-                loggearUsuario(usuarioLoggeado);
-                var nombre = HttpContext.Session.GetString("NombreDeUsuario");
-                ViewBag.Nombre = nombre;
-                return View("~/Views/Home/Index.cshtml");
+                HerramientasUsuariosViewModel herramientasUsuarioVM = loggearUsuario(usuarioLoggeado);
+                return View("~/Views/Home/Index.cshtml", herramientasUsuarioVM);
             }
         }
 
-        private void loggearUsuario(Usuario usuario)
+        private HerramientasUsuariosViewModel loggearUsuario(Usuario usuario)
         {
             HttpContext.Session.SetString("Id", usuario.Id.ToString());
             HttpContext.Session.SetString("NombreDeUsuario", usuario.NombreDeUsuario);
             // HttpContext.Session.SetString("Contraseña", usuario.Password);
             HttpContext.Session.SetString("Rol", usuario.RolDelUsuario.ToString());
+
+            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
+            return (herramientasVM);
         }
 
 

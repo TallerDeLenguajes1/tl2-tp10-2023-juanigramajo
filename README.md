@@ -4,7 +4,6 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
-- El nombre del usuario unicamente se muestra cuando recien se loguea (por el viewBag), cuando abro el home de otro lado no se muestra
 
 ---
 
@@ -26,4 +25,4 @@
 - Por qué en los views, en @model, cuando trabajo con ViewModels tengo que mandarle una ruta específica y cuando eran clases normales no hacía falta
     - Ejemplo: @model Tarea
     - Ejemplo: @model tl2_tp10_2023_juanigramajo.ViewModels.Tareas.ListarTareasViewModel
-- Sobre el viewBag, como se implementaría con otro viewModel
+- Por que un model de una vista depende del otro (ejemplo, el error que me salía cuando de un index que recibia un tipo de dato quería pasar a otro index que recibia otro tipo de dato)

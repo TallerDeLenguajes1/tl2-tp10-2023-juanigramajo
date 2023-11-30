@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.ListarUsuariosViewModel
+@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.HerramientasUsuariosViewModel
 
 @if (TempData["ErrorMessage"] != null)
 {
@@ -23,17 +23,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.ListadoUsuarios)
+        @foreach (var user in Model.ListarUsuarioVM.ListadoUsuarios)
         {
             <tr>
                 <td hidden>@user.Id</td>
                 <td>@user.NombreDeUsuario</td>
                 <td>@user.RolDelUsuario</td>
                 <td>
-                    @if (ViewBag.Rol == "Administrador")
+                    @if (Model.RolDeSesion == "Administrador")
                     {
                         <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@user.Id" class="btn btn-info">Editar</a>
-                        @if (ViewBag.Nombre == user.NombreDeUsuario)
+                        @if (Model.NombreDeSesion == user.NombreDeUsuario)
                         {
                             <span class="text-danger">No puedes eliminar tu propio usuario.</span>
                         } else

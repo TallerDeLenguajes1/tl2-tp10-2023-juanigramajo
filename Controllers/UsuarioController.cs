@@ -28,15 +28,11 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
             ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
-
-            string rolUsuario = HttpContext.Session.GetString("Rol");
-            string nombreDeUsuario = HttpContext.Session.GetString("NombreDeUsuario");
+            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(listarUsuariosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
             if (ListadoUsuarios != null)
             {
-                ViewBag.Rol = rolUsuario;
-                ViewBag.Nombre = nombreDeUsuario;
-                return View(listarUsuariosVM);
+                return View(herramientasVM);
             }
             else
             {
@@ -51,7 +47,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             string rolUsuario = HttpContext.Session.GetString("Rol");
             ViewBag.Rol = rolUsuario;
             
-            return View(new CrearUsuarioViewModel());
+            return View(new HerramientasUsuariosViewModel());
         }
 
     
@@ -82,12 +78,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
 
             ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(repositorioUsuario.GetById(idUsuario));
-            string rolUsuario = HttpContext.Session.GetString("Rol");
-            string nombreDeUsuario = HttpContext.Session.GetString("NombreDeUsuario");
-            ViewBag.Rol = rolUsuario;
-            ViewBag.Nombre = nombreDeUsuario;
+            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(modificarUsuarioVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
-            return View(modificarUsuarioVM);
+            return View(herramientasVM);
         }
 
 
