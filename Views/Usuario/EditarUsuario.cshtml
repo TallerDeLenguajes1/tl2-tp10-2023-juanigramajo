@@ -1,17 +1,27 @@
 
 @model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.HerramientasUsuariosViewModel
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
 <form asp-controller="Usuario" asp-action="EditarUsuario">
     <input hidden asp-for="@Model.ModificarUsuarioVM.Id">
 
     <div class="mb-3" class="form-group">
         <label asp-for="@Model.ModificarUsuarioVM.NombreDeUsuario" class="form-label"></label>
         <input asp-for="@Model.ModificarUsuarioVM.NombreDeUsuario" class="form-control"/>
+        <span asp-validation-for="@Model.ModificarUsuarioVM.NombreDeUsuario" class="text-danger"></span>
     </div>
 
     <div class="mb-3" class="form-group">
         <label asp-for="@Model.ModificarUsuarioVM.Password" class="form-label"></label>
         <input asp-for="@Model.ModificarUsuarioVM.Password" class="form-control"/>
+        <span asp-validation-for="@Model.ModificarUsuarioVM.Password" class="text-danger"></span>
     </div>
 
     @if (Model.RolDeSesion == "Administrador" && Model.ModificarUsuarioVM.NombreDeUsuario == Model.NombreDeSesion)
@@ -27,6 +37,7 @@
                 <option value="Administrador">Administrador</option>
                 <option value="Operador">Operador</option>
             </select>
+            <span asp-validation-for="@Model.ModificarUsuarioVM.RolDelUsuario" class="text-danger"></span>
         </div>
     }
 

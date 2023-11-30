@@ -4,6 +4,8 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
+- Sigo usando viewBag.Rol para tableros
+- Que pide required en formularios cuando no esta solicitado en el viewmodel
 
 ---
 

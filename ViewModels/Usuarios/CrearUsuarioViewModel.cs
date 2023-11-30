@@ -8,10 +8,12 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
     public class CrearUsuarioViewModel
     {
         [Required(ErrorMessage = "Este campo es requerido.")]
+        [StringLength(30, ErrorMessage = "El nombre de usuario no puede contener mas de 30 caracteres")]
         [Display(Name = "Nombre de Usuario")]
         public string NombreDeUsuario { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido.")] 
+        [Required(ErrorMessage = "Este campo es requerido.")]
+        [StringLength(30, ErrorMessage = "La contraseña no puede contener mas de 30 caracteres")]
         [PasswordPropertyText]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }

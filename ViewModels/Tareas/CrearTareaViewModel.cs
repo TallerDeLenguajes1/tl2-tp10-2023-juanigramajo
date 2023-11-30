@@ -12,20 +12,23 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
         public int IdTablero { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido.")]
-        [Display(Name = "Nombre")] 
+        [StringLength(100, ErrorMessage = "El nombre de la tarea no puede contener más de 100 caracteres")]
+        [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [Display(Name = "Descripción")] 
+        [Display(Name = "Descripción")]
+        [StringLength(200, ErrorMessage = "La descripción de la tarea no puede contener más de 200 caracteres")]
         public string Descripcion { get; set; }
 
-        [Display(Name = "Color")] 
+        [Display(Name = "Color")]
+        [StringLength(15, ErrorMessage = "El color de la tarea no puede contener más de 15 caracteres")]
         public string Color { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido.")]
-        [Display(Name = "Estado")] 
+        [Display(Name = "Estado")]
         public EstadoTarea Estado { get; set; }        
 
-        [Display(Name = "Id del usuario asignado")] 
+        [Display(Name = "Id del usuario asignado")]
         public int IdUsuarioAsignado { get; set; }
 
 
