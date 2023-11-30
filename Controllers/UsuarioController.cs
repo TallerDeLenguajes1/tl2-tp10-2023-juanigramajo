@@ -44,9 +44,6 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {   
-            string rolUsuario = HttpContext.Session.GetString("Rol");
-            ViewBag.Rol = rolUsuario;
-            
             return View(new HerramientasUsuariosViewModel());
         }
 

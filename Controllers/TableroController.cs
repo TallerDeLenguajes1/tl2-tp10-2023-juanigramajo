@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
 using tl2_tp10_2023_juanigramajo.ViewModels.Tableros;
+using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -32,13 +33,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             {
                 var idUser = HttpContext.Session.GetString("Id");
                 List<Tablero> ListadoTableros = repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-
-                ListarTablerosViewModel CrearTableroVM = new ListarTablerosViewModel(ListadoTableros);
+                ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
+                HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
                 if (ListadoTableros != null)
                 {
-                    ViewBag.Rol = rolUsuario;
-                    return View(CrearTableroVM);
+                    return View(herramientasUsuariosVM);
                 }
                 else
                 {
@@ -49,11 +49,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             {
                 List<Tablero> ListadoTableros = repositorioTablero.List();
                 ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
+                HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
                 if (ListadoTableros != null)
                 {
                     ViewBag.Rol = rolUsuario;
-                    return View(listarTablerosVM);
+                    return View(herramientasUsuariosVM);
                 }
                 else
                 {

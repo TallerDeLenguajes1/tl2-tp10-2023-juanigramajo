@@ -4,7 +4,6 @@
 
 ## Corregir:
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
-- Sigo usando viewBag.Rol para tableros
 - Que pide required en formularios cuando no esta solicitado en el viewmodel
 
 ---
@@ -28,3 +27,5 @@
     - Ejemplo: @model Tarea
     - Ejemplo: @model tl2_tp10_2023_juanigramajo.ViewModels.Tareas.ListarTareasViewModel
 - Por que un model de una vista depende del otro (ejemplo, el error que me salía cuando de un index que recibia un tipo de dato quería pasar a otro index que recibia otro tipo de dato)
+- TableroController/Index() sobre la clase con los valores de inicio de sesion, debo hacerla cada vez que la uso y no parece ser eficaz ese método
+- Sobre inyección de dependencia

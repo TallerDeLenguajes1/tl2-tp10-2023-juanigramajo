@@ -2,15 +2,17 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using tl2_tp10_2023_juanigramajo.Models;
 using tl2_tp10_2023_juanigramajo.ViewModels;
+using tl2_tp10_2023_juanigramajo.ViewModels.Tableros;
 
 namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
 {
     public class HerramientasUsuariosViewModel
     {
         public CrearUsuarioViewModel CrearUsuarioVM { get; set; }
-        public ListarUsuariosViewModel ListarUsuarioVM { get; set; }
+        public ListarUsuariosViewModel ListarUsuariosVM { get; set; }
         public ModificarUsuarioViewModel ModificarUsuarioVM { get; set; }
         public LoginViewModel LoginVM { get; set; }
+        public ListarTablerosViewModel ListarTablerosVM { get; set; }
 
         public string IdDeSesion { get; set; }
         public string NombreDeSesion { get; set; }
@@ -34,7 +36,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
         }
 
         public HerramientasUsuariosViewModel(ListarUsuariosViewModel listar, string id, string name, string rol){
-            this.ListarUsuarioVM = listar;
+            this.ListarUsuariosVM = listar;
             this.IdDeSesion = id;
             this.NombreDeSesion = name;
             this.RolDeSesion = rol;
@@ -53,5 +55,12 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Usuarios
             this.NombreDeSesion = name;
             this.RolDeSesion = rol;
         }
+
+        public HerramientasUsuariosViewModel(ListarTablerosViewModel listarTableros, string id, string name, string rol){
+            this.ListarTablerosVM = listarTableros;
+            this.IdDeSesion = id;
+            this.NombreDeSesion = name;
+            this.RolDeSesion = rol;
+        }        
     }
 }

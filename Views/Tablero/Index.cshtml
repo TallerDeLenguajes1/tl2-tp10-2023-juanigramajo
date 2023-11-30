@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model tl2_tp10_2023_juanigramajo.ViewModels.Tableros.ListarTablerosViewModel
+@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.HerramientasUsuariosViewModel
 
 @if (TempData["ErrorMessage"] != null)
 {
@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var tab in Model.ListadoTableros)
+        @foreach (var tab in Model.ListarTablerosVM.ListadoTableros)
         {
             <tr>
                 <td hidden>@tab.Id</td>
@@ -32,7 +32,7 @@
                 <td>@tab.Nombre</td>
                 <td>@tab.Descripcion</td>
                 <td>
-                    @if (ViewBag.Rol == "Administrador")
+                    @if (Model.RolDeSesion == "Administrador")
                     {
                         <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
                         <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
