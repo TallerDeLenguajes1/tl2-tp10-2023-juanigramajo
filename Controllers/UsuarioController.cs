@@ -7,14 +7,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 {
     public class UsuarioController : Controller
     {
-        private IUsuarioRepository repositorioUsuario;
         private readonly ILogger<UsuarioController> _logger;
+        private readonly IUsuarioRepository _repositorioUsuario;
 
 
-        public UsuarioController(ILogger<UsuarioController> logger)
+        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
         {
             _logger = logger;
-            repositorioUsuario = new UsuarioRepository();
+            _repositorioUsuario = usuarioRepository;
         }
 
 
@@ -26,7 +26,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToRoute(new { controller = "Login", action = "Index" });
             }
 
-            List<Usuario> ListadoUsuarios = repositorioUsuario.List();
+            List<Usuario> ListadoUsuarios = _repositorioUsuario.List();
             ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
             HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(listarUsuariosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
@@ -54,7 +54,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
 
             Usuario usuario = new Usuario(crearUsuarioVM);
-            repositorioUsuario.Create(usuario);
+            _repositorioUsuario.Create(usuario);
             
             return RedirectToAction("Index");
         }
@@ -74,7 +74,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(repositorioUsuario.GetById(idUsuario));
+            ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(_repositorioUsuario.GetById(idUsuario));
             HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(modificarUsuarioVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
             return View(herramientasVM);
@@ -98,7 +98,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
 
             Usuario usuario2 = new Usuario(modificarUsuarioVM);
-            repositorioUsuario.Update(usuario2.Id, usuario2);
+            _repositorioUsuario.Update(usuario2.Id, usuario2);
 
             return RedirectToAction("Index");
         }
@@ -117,7 +117,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
 
-            repositorioUsuario.Remove(idUsuario);
+            _repositorioUsuario.Remove(idUsuario);
 
             return RedirectToAction("Index");
         }

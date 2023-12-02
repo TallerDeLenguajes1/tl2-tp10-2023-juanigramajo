@@ -7,14 +7,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 {
     public class TareaController : Controller
     {
-        private ITareaRepository repositorioTarea;
+        private ITareaRepository _repositorioTarea;
         private readonly ILogger<TareaController> _logger;
 
 
-        public TareaController(ILogger<TareaController> logger)
+        public TareaController(ILogger<TareaController> logger, ITareaRepository tareaRepository)
         {
             _logger = logger;
-            repositorioTarea = new TareaRepository();
+            _repositorioTarea = tareaRepository;
         }
 
 
@@ -28,7 +28,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if (!isAdmin())
             {
                 var idUser = HttpContext.Session.GetString("Id");
-                List<Tarea> ListadoTareas = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                List<Tarea> ListadoTareas = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
                 ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
 
                 if (ListadoTareas != null)
@@ -42,7 +42,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
             else 
             {
-                List<Tarea> ListadoTareas = repositorioTarea.List();
+                List<Tarea> ListadoTareas = _repositorioTarea.List();
                 ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
 
                 if (ListadoTareas != null)
@@ -83,7 +83,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             Tarea tarea = new Tarea(crearTareaVM);
 
             // la consigna pedía asumir que el tablero es el mismo, por eso envío un 1
-            repositorioTarea.Create(1, tarea);
+            _repositorioTarea.Create(1, tarea);
 
             return RedirectToAction("Index");
         }
@@ -100,7 +100,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if (!isAdmin())
             {
                 var idUser = HttpContext.Session.GetString("Id");
-                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
                 Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == idTarea);
                 
                 if (tarea == null)
@@ -110,7 +110,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 }
             }
             
-            ModificarTareaViewModel modificarTareaVM = new ModificarTareaViewModel(repositorioTarea.GetById(idTarea));
+            ModificarTareaViewModel modificarTareaVM = new ModificarTareaViewModel(_repositorioTarea.GetById(idTarea));
             
             return View(modificarTareaVM);
         }
@@ -127,7 +127,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if (!isAdmin())
             {
                 var idUser = HttpContext.Session.GetString("Id");
-                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
                 Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == modificarTareaVM.Id);
                 
                 if (tarea == null)
@@ -139,7 +139,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!ModelState.IsValid) return RedirectToAction("EditarTarea");
 
             Tarea tarea2 = new Tarea(modificarTareaVM);
-            repositorioTarea.Update(tarea2.Id, tarea2);
+            _repositorioTarea.Update(tarea2.Id, tarea2);
 
             return RedirectToAction("Index");
         }
@@ -155,7 +155,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if (!isAdmin())
             {
                 var idUser = HttpContext.Session.GetString("Id");
-                List<Tarea> listadoPermitido = repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
                 Tarea tarea = listadoPermitido.FirstOrDefault(tarea => tarea.Id == idTarea);
                 
                 if (tarea == null)
@@ -165,7 +165,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 }
             }
             
-            repositorioTarea.Remove(idTarea);
+            _repositorioTarea.Remove(idTarea);
 
             return RedirectToAction("Index");
         }

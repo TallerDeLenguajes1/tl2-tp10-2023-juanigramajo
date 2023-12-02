@@ -8,14 +8,14 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 {
     public class TableroController : Controller
     {
-        private ITableroRepository repositorioTablero;
+        private ITableroRepository _repositorioTablero;
         private readonly ILogger<TableroController> _logger;
 
 
-        public TableroController(ILogger<TableroController> logger)
+        public TableroController(ILogger<TableroController> logger, ITableroRepository tableroRepository)
         {
             _logger = logger;
-            repositorioTablero = new TableroRepository();
+            _repositorioTablero = tableroRepository;
         }
 
 
@@ -32,7 +32,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!isAdmin())
             {
                 var idUser = HttpContext.Session.GetString("Id");
-                List<Tablero> ListadoTableros = repositorioTablero.ListByUser(Convert.ToInt32(idUser));
+                List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
                 ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
                 HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
@@ -47,7 +47,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             } 
             else 
             {
-                List<Tablero> ListadoTableros = repositorioTablero.List();
+                List<Tablero> ListadoTableros = _repositorioTablero.List();
                 ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
                 HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
@@ -99,7 +99,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
 
             Tablero tablero = new Tablero(crearTableroVM);
-            repositorioTablero.Create(tablero);
+            _repositorioTablero.Create(tablero);
 
             return RedirectToAction("Index");
         }
@@ -119,7 +119,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModificarTableroViewModel modificarTableroVM = new ModificarTableroViewModel(repositorioTablero.GetById(idTablero));
+            ModificarTableroViewModel modificarTableroVM = new ModificarTableroViewModel(_repositorioTablero.GetById(idTablero));
 
             return View(modificarTableroVM);
         }
@@ -141,7 +141,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if(!ModelState.IsValid) return RedirectToAction("EditarTablero");
 
             Tablero tablero2 = new Tablero(modificarTableroVM);
-            repositorioTablero.Update(tablero2.Id, tablero2);
+            _repositorioTablero.Update(tablero2.Id, tablero2);
 
             return RedirectToAction("Index");
         }
@@ -160,7 +160,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Index");
             }
             
-            repositorioTablero.Remove(idTablero);
+            _repositorioTablero.Remove(idTablero);
 
             return RedirectToAction("Index");
         }

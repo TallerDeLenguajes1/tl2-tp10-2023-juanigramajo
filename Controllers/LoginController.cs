@@ -46,7 +46,6 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         {
             HttpContext.Session.SetString("Id", usuario.Id.ToString());
             HttpContext.Session.SetString("NombreDeUsuario", usuario.NombreDeUsuario);
-            // HttpContext.Session.SetString("Contraseña", usuario.Password);
             HttpContext.Session.SetString("Rol", usuario.RolDelUsuario.ToString());
 
             HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
