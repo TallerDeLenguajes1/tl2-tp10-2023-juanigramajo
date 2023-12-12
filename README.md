@@ -33,6 +33,7 @@
     tableros pueden hacer todos
     y solamente pueden crearlos para uno, es decir, no se puede crear un tablero y asignarle el tablero a otro usuario
     no importa si se es operario o admin)
+- Advertir al usuario de los errores del try catch
 
 ---
 

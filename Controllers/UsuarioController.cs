@@ -20,23 +20,33 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
         public IActionResult Index()
         {
-            if (!isLogged())
+            try
             {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
 
-            List<Usuario> ListadoUsuarios = _repositorioUsuario.List();
-            ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
-            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(listarUsuariosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
+                List<Usuario> ListadoUsuarios = _repositorioUsuario.List();
+                ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
+                HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(listarUsuariosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
-            if (ListadoUsuarios != null)
-            {
-                return View(herramientasVM);
+                if (ListadoUsuarios != null)
+                {
+                    return View(herramientasVM);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest();
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
             }
         }
 
@@ -44,82 +54,132 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         [HttpGet]
         public IActionResult CrearUsuario()
         {   
-            return View(new HerramientasUsuariosViewModel());
+            try
+            {
+                return View(new HerramientasUsuariosViewModel());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+            }
         }
 
     
         [HttpPost]
         public IActionResult CrearUsuario(CrearUsuarioViewModel crearUsuarioVM)
         {   
-            if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
+            try
+            {
+                if(!ModelState.IsValid) return RedirectToAction("CrearUsuario");
 
-            Usuario usuario = new Usuario(crearUsuarioVM);
-            _repositorioUsuario.Create(usuario);
-            
-            return RedirectToAction("Index");
+                Usuario usuario = new Usuario(crearUsuarioVM);
+                _repositorioUsuario.Create(usuario);
+                
+                return RedirectToAction("Index");                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+            }
         }
     
 
         [HttpGet]
         public IActionResult EditarUsuario(int idUsuario)
         {
-            if (!isLogged())
+            try
             {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
-            if(!isAdmin())
-            {   
-                TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
-                return RedirectToAction("Index");
-            }
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
+                if(!isAdmin())
+                {   
+                    TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
+                    return RedirectToAction("Index");
+                }
 
-            ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(_repositorioUsuario.GetById(idUsuario));
-            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(modificarUsuarioVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
+                ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(_repositorioUsuario.GetById(idUsuario));
+                HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(modificarUsuarioVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
-            return View(herramientasVM);
+                return View(herramientasVM);                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+            }
         }
 
 
         [HttpPost]
         public IActionResult EditarUsuario(ModificarUsuarioViewModel modificarUsuarioVM)
         {
-            if (!isLogged())
+            try
             {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
-            if(!isAdmin())
-            {   
-                TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
+                if(!isAdmin())
+                {   
+                    TempData["ErrorMessage"] = "No tienes permisos para editar un usuario";
+                    return RedirectToAction("Index");
+                }
+                if(!ModelState.IsValid) return RedirectToAction("EditarUsuario");
+
+
+                Usuario usuario2 = new Usuario(modificarUsuarioVM);
+                _repositorioUsuario.Update(usuario2.Id, usuario2);
+
                 return RedirectToAction("Index");
             }
-            if(!ModelState.IsValid) return RedirectToAction("EditarUsuario");
-
-
-            Usuario usuario2 = new Usuario(modificarUsuarioVM);
-            _repositorioUsuario.Update(usuario2.Id, usuario2);
-
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+            }
         }
 
         
         public IActionResult DeleteUsuario(int idUsuario)
         {
-            if (!isLogged())
+            try
             {
-                TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
-                return RedirectToRoute(new { controller = "Login", action = "Index" });
-            }
-            if(!isAdmin())
-            {   
-                TempData["ErrorMessage"] = "No tienes permisos para eliminar un usuario";
-                return RedirectToAction("Index");
-            }
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
+                if(!isAdmin())
+                {   
+                    TempData["ErrorMessage"] = "No tienes permisos para eliminar un usuario";
+                    return RedirectToAction("Index");
+                }
 
-            _repositorioUsuario.Remove(idUsuario);
+                _repositorioUsuario.Remove(idUsuario);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+            }
         }
 
 
