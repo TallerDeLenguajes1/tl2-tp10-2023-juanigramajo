@@ -34,10 +34,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             if (usuarioLoggeado == null)
             {
                 TempData["MensajeError"] = "Nombre de usuario o contraseña incorrectos.";
+                _logger.LogWarning($"Intento de acceso invalido - Usuario: [ {HerramientaUsuarioVM.LoginVM.NombreDeUsuario} ] Clave ingresada: [ {HerramientaUsuarioVM.LoginVM.Password} ]");
                 return RedirectToAction("Index");
             } else
             {
                 HerramientasUsuariosViewModel herramientasUsuarioVM = loggearUsuario(usuarioLoggeado);
+                _logger.LogInformation($"El usuario [ {HerramientaUsuarioVM.LoginVM.NombreDeUsuario} ] ingresó corecctamente.");
                 return View("~/Views/Home/Index.cshtml", herramientasUsuarioVM);
             }
         }
