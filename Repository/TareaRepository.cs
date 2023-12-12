@@ -3,14 +3,19 @@ using tl2_tp10_2023_juanigramajo.Models;
 
 public class TareaRepository : ITareaRepository
 {
-    private string cadenaConexion = "Data Source=DB/kandan.db;Cache=Shared";
+    private readonly string _cadenaConexion;
+
+    public TareaRepository(string cadenaConexion)
+    {
+        _cadenaConexion = cadenaConexion;
+    }
 
     // Crear una nueva tarea en un tablero. (recibe un idTablero, devuelve un objeto Tarea)
     public Tarea Create(int idTab, Tarea tarea)
     {
         var query = $"INSERT INTO Tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idTablero, @nombre, @estado, @desc, @color, @idUserAsign)";
 
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -23,7 +28,8 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@idUserAsign", 0));
             // la consigna pedía que no posea usuario asignado
 
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al crear la tarea");
 
             connection.Close();
         }
@@ -36,7 +42,7 @@ public class TareaRepository : ITareaRepository
     public void Update(int id, Tarea tarea)
     {
         var query = $"UPDATE Tarea SET nombre = @nombre, estado = @estado, descripcion = @desc, color = @color WHERE id = @idcambiar;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -49,7 +55,8 @@ public class TareaRepository : ITareaRepository
             // command.Parameters.Add(new SQLiteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
             command.Parameters.Add(new SQLiteParameter("@idcambiar", id));
 
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al actualizar la tarea");
 
             connection.Close();
         }
@@ -59,7 +66,7 @@ public class TareaRepository : ITareaRepository
     // Obtener detalles de una tarea por su ID. (devuelve un objeto Tarea)
     public Tarea GetById(int id)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         var tarea = new Tarea();
 
@@ -86,6 +93,7 @@ public class TareaRepository : ITareaRepository
         }
         connection.Close();
 
+        if (tarea == null) throw new Exception ($"No se encontró la tarea en la base de datos");
 
         return (tarea);
     }
@@ -93,7 +101,7 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> List()
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
@@ -121,7 +129,8 @@ public class TareaRepository : ITareaRepository
         }
         connection.Close();
 
-
+        if (ListaTareas == null) throw new Exception ($"No se encontraron tareas en la base de datos");
+        
         return ListaTareas;
     }
     
@@ -130,7 +139,7 @@ public class TareaRepository : ITareaRepository
     // Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario, devuelve un list de tareas)
     public List<Tarea> ListByUser(int idUser)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
@@ -159,6 +168,8 @@ public class TareaRepository : ITareaRepository
         }
         connection.Close();
 
+        if (ListaTareas == null) throw new Exception ($"No se encontraron tareas asignadas al usuario en la base de datos");
+
 
         return ListaTareas;
     }
@@ -167,7 +178,7 @@ public class TareaRepository : ITareaRepository
     // Listar todas las tareas de un tablero específico. (recibe un idTablero, devuelve un list de tareas)
     public List<Tarea> ListByTablero(int idTab)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
@@ -196,6 +207,7 @@ public class TareaRepository : ITareaRepository
         }
         connection.Close();
 
+        if (ListaTareas == null) throw new Exception ($"No se encontraron tareas en la base de datos");
 
         return ListaTareas;
     }
@@ -203,7 +215,7 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> CantxEstado(EstadoTarea estado)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
@@ -232,6 +244,8 @@ public class TareaRepository : ITareaRepository
         }
         connection.Close();
 
+        if (ListaTareas == null) throw new Exception ($"No se encontraron tareas en la base de datos");
+
 
         return ListaTareas;
     }
@@ -240,7 +254,7 @@ public class TareaRepository : ITareaRepository
     // Eliminar una tarea (recibe un IdTarea)
     public void Remove(int id)
     {
-        using(SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using(SQLiteConnection connection = new (_cadenaConexion))
         {
             SQLiteCommand command = connection.CreateCommand();
             command.CommandText = $"DELETE FROM Tarea WHERE id = @idTarea;";
@@ -248,7 +262,8 @@ public class TareaRepository : ITareaRepository
 
             connection.Open();
             
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al eliminar la tarea");
             
             connection.Close();
         }
@@ -259,7 +274,7 @@ public class TareaRepository : ITareaRepository
     public void Asignar(int idUser, int idTarea)
     {
         var query = "UPDATE Tarea SET id_usuario_asignado = @idUser WHERE Id = idTarea";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -267,7 +282,8 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@idUser", idUser));
             command.Parameters.Add(new SQLiteParameter("@idTarea", idTarea));
 
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al modificar la tarea");
 
             connection.Close();
         }

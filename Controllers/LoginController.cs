@@ -12,10 +12,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         private readonly ILogger<LoginController> _logger;
 
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger, IUsuarioRepository usuarioRepository)
         {
             _logger = logger;
-            repositorioUsuario = new UsuarioRepository();
+            repositorioUsuario = usuarioRepository;
         }
 
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XbutUWKJZRCbfgap4I5qQ1Y0f1Vlmz7XWjnGEiJjTfWi0Oqop8r34Pgat2XNiExvlvzYITpbIW4FoERphJNLxQ==",
+  "dgSpecHash": "8SpIYkYkXHMhm/UYLuU+bTYr3E5G0fMG2DcXQCD4IHK3C/beT3n/Ic0s+v8fCxhlQKOTiP5tjMdQvRch8ptNVg==",
   "success": true,
   "projectFilePath": "/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
   "expectedPackageFiles": [
@@ -48,7 +48,10 @@
     "/Users/juanigramajo/.nuget/packages/system.security.permissions/4.7.0/system.security.permissions.4.7.0.nupkg.sha512",
     "/Users/juanigramajo/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512",
     "/Users/juanigramajo/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512",
-    "/Users/juanigramajo/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
+    "/Users/juanigramajo/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
+    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.ref/7.0.14/microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "/Users/juanigramajo/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.14/microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
+    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.host.osx-x64/7.0.14/microsoft.netcore.app.host.osx-x64.7.0.14.nupkg.sha512"
   ],
   "logs": []
 }

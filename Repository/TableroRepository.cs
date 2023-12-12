@@ -3,14 +3,19 @@ using tl2_tp10_2023_juanigramajo.Models;
 
 public class TableroRepository : ITableroRepository
 {
-    private string cadenaConexion = "Data Source=DB/kandan.db;Cache=Shared";
+    private readonly string _cadenaConexion;
+
+    public TableroRepository(string cadenaConexion)
+    {
+        _cadenaConexion = cadenaConexion;
+    }
 
     
     // Crear un nuevo tablero. (devuelve un objeto Tablero).
     public Tablero Create(Tablero tab)
     {
         var query = $"INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@idUserProp, @nombre, @desc)";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -20,7 +25,8 @@ public class TableroRepository : ITableroRepository
             command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
             command.Parameters.Add(new SQLiteParameter("@desc", tab.Descripcion));
 
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al crear el tablero");
 
             connection.Close();
         }
@@ -33,7 +39,7 @@ public class TableroRepository : ITableroRepository
     public void Update(int id, Tablero tablero)
     {
         var query = $"UPDATE Tablero SET nombre = @nombre, descripcion = @desc WHERE id = @idcambiar;";
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SQLiteCommand(query, connection);
@@ -43,7 +49,8 @@ public class TableroRepository : ITableroRepository
             command.Parameters.Add(new SQLiteParameter("@desc", tablero.Descripcion));
             command.Parameters.Add(new SQLiteParameter("@idcambiar", id));
 
-            command.ExecuteNonQuery();
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al actualizar el tablero");
 
             connection.Close();
         }
@@ -53,7 +60,7 @@ public class TableroRepository : ITableroRepository
     // Obtener detalles de un tablero por su ID. (recibe un id y devuelve un Tablero).
     public Tablero GetById(int id)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         var tab = new Tablero();
 
@@ -76,6 +83,7 @@ public class TableroRepository : ITableroRepository
         }
         connection.Close();
 
+        if (tab == null) throw new Exception($"No se encontraron tableros en la base de datos");
 
         return (tab);
     }
@@ -89,7 +97,7 @@ public class TableroRepository : ITableroRepository
         List<Tablero> ListaTableros = new List<Tablero>();
 
 
-        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using (SQLiteConnection connection = new (_cadenaConexion))
         {
             SQLiteCommand command = new SQLiteCommand(queryString, connection);
             connection.Open();
@@ -109,6 +117,8 @@ public class TableroRepository : ITableroRepository
             connection.Close();
         }
 
+        if (ListaTableros == null) throw new Exception($"No se encontraron tableros en la base de datos");
+
         return ListaTableros;
     }
 
@@ -116,7 +126,7 @@ public class TableroRepository : ITableroRepository
     // Listar todos los tableros de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
     public List<Tablero> ListByUser(int id)
     {
-        SQLiteConnection connection = new SQLiteConnection(cadenaConexion);
+        SQLiteConnection connection = new (_cadenaConexion);
 
         List<Tablero> ListaTableros = new List<Tablero>();
 
@@ -141,6 +151,7 @@ public class TableroRepository : ITableroRepository
         }
         connection.Close();
 
+        if (ListaTableros == null) throw new Exception($"No se encontraron tableros asignados al usuario en la base de datos");
 
         return ListaTableros;
     }
@@ -149,7 +160,7 @@ public class TableroRepository : ITableroRepository
     // Eliminar un tablero por ID.
     public void Remove(int id)
     {
-        using(SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        using(SQLiteConnection connection = new (_cadenaConexion))
         {
             SQLiteCommand command = connection.CreateCommand();
             command.CommandText = $"DELETE FROM Tablero WHERE id = @idTablero;";
@@ -157,8 +168,9 @@ public class TableroRepository : ITableroRepository
 
             connection.Open();
             
-            command.ExecuteNonQuery();
-            
+            var commandENonQ = command.ExecuteNonQuery();
+            if (commandENonQ == 0) throw new Exception("Se produjo un error al eliminar el tablero");
+
             connection.Close();
         }
     }

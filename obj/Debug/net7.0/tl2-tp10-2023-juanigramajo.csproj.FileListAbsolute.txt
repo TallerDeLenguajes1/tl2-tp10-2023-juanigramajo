@@ -56,3 +56,4 @@
 /Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/bin/Debug/net7.0/runtimes/win/lib/netcoreapp3.0/System.Windows.Extensions.dll
 /Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/obj/Debug/net7.0/tl2-tp10-2023-juanigramajo.csproj.AssemblyReference.cache
 /Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/obj/Debug/net7.0/tl2-tp10-2023-juanigramajo.csproj.CopyComplete
+/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/obj/Debug/net7.0/tl2-tp10-2023-juanigramajo.sourcelink.json
