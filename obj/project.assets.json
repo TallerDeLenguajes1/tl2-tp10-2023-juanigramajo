@@ -1968,11 +1968,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
+      "projectUniqueName": "/Users/juanigramajo/Library/Mobile Documents/com~apple~CloudDocs/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
       "projectName": "tl2-tp10-2023-juanigramajo",
-      "projectPath": "/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
+      "projectPath": "/Users/juanigramajo/Library/Mobile Documents/com~apple~CloudDocs/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
       "packagesPath": "/Users/juanigramajo/.nuget/packages/",
-      "outputPath": "/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/obj/",
+      "outputPath": "/Users/juanigramajo/Library/Mobile Documents/com~apple~CloudDocs/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/juanigramajo/.nuget/NuGet/NuGet.Config"
@@ -1993,6 +1993,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2022,15 +2027,15 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.15, 7.0.15]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.osx-x64",
-            "version": "[7.0.14, 7.0.14]"
+            "name": "Microsoft.NETCore.App.Host.osx-arm64",
+            "version": "[7.0.15, 7.0.15]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
+            "version": "[7.0.15, 7.0.15]"
           }
         ],
         "frameworkReferences": {
@@ -2041,7 +2046,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.100-preview.1.24101.2/RuntimeIdentifierGraph.json"
       }
     }
   }

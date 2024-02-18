@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8SpIYkYkXHMhm/UYLuU+bTYr3E5G0fMG2DcXQCD4IHK3C/beT3n/Ic0s+v8fCxhlQKOTiP5tjMdQvRch8ptNVg==",
+  "dgSpecHash": "ThNS0y/mMLtzye2MlW6fn6ya6CQWTzJ/i+1oeFklkeCxc/gFSGgFV8Xpph4fB/gu7nx7mhQ/RvuS15liJ26urw==",
   "success": true,
-  "projectFilePath": "/Users/juanigramajo/Documents/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
+  "projectFilePath": "/Users/juanigramajo/Library/Mobile Documents/com~apple~CloudDocs/Fac/05. Tercer año/02. Segundo cuatrimestre/Taller de Lenguajes II/Trabajos Prácticos/tl2-tp10-2023-juanigramajo/tl2-tp10-2023-juanigramajo.csproj",
   "expectedPackageFiles": [
     "/Users/juanigramajo/.nuget/packages/entityframework/6.4.4/entityframework.6.4.4.nupkg.sha512",
     "/Users/juanigramajo/.nuget/packages/microsoft.aspnetcore.cryptography.internal/2.2.0/microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
@@ -49,9 +49,9 @@
     "/Users/juanigramajo/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512",
     "/Users/juanigramajo/.nuget/packages/system.text.encodings.web/4.5.0/system.text.encodings.web.4.5.0.nupkg.sha512",
     "/Users/juanigramajo/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
-    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.ref/7.0.14/microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
-    "/Users/juanigramajo/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.14/microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
-    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.host.osx-x64/7.0.14/microsoft.netcore.app.host.osx-x64.7.0.14.nupkg.sha512"
+    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.ref/7.0.15/microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "/Users/juanigramajo/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.15/microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "/Users/juanigramajo/.nuget/packages/microsoft.netcore.app.host.osx-arm64/7.0.15/microsoft.netcore.app.host.osx-arm64.7.0.15.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,4 +1,4 @@
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using tl2_tp10_2023_juanigramajo.Models;
 
 public class TableroRepository : ITableroRepository
@@ -15,15 +15,15 @@ public class TableroRepository : ITableroRepository
     public Tablero Create(Tablero tab)
     {
         var query = $"INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@idUserProp, @nombre, @desc)";
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
 
             // la consigna pedía asumir que el usuario propietario es el mismo, por eso envío un 1
-            command.Parameters.Add(new SQLiteParameter("@idUserProp", 1));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tab.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@desc", tab.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@idUserProp", 1));
+            command.Parameters.Add(new SqliteParameter("@nombre", tab.Nombre));
+            command.Parameters.Add(new SqliteParameter("@desc", tab.Descripcion));
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al crear el tablero");
@@ -39,15 +39,15 @@ public class TableroRepository : ITableroRepository
     public void Update(int id, Tablero tablero)
     {
         var query = $"UPDATE Tablero SET nombre = @nombre, descripcion = @desc WHERE id = @idcambiar;";
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
 
             // command.Parameters.Add(new SQLiteParameter("@idUserProp", tablero.IdUsuarioPropietario));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tablero.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@desc", tablero.Descripcion));
-            command.Parameters.Add(new SQLiteParameter("@idcambiar", id));
+            command.Parameters.Add(new SqliteParameter("@nombre", tablero.Nombre));
+            command.Parameters.Add(new SqliteParameter("@desc", tablero.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@idcambiar", id));
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al actualizar el tablero");
@@ -60,18 +60,18 @@ public class TableroRepository : ITableroRepository
     // Obtener detalles de un tablero por su ID. (recibe un id y devuelve un Tablero).
     public Tablero GetById(int id)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         var tab = new Tablero();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tablero WHERE id = @idTablero";
-        command.Parameters.Add(new SQLiteParameter("@idTablero", id));
+        command.Parameters.Add(new SqliteParameter("@idTablero", id));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -97,12 +97,12 @@ public class TableroRepository : ITableroRepository
         List<Tablero> ListaTableros = new List<Tablero>();
 
 
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
-            SQLiteCommand command = new SQLiteCommand(queryString, connection);
+            SqliteCommand command = new SqliteCommand(queryString, connection);
             connection.Open();
         
-            using(SQLiteDataReader reader = command.ExecuteReader())
+            using(SqliteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -126,18 +126,18 @@ public class TableroRepository : ITableroRepository
     // Listar todos los tableros de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
     public List<Tablero> ListByUser(int id)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         List<Tablero> ListaTableros = new List<Tablero>();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario";
-        command.Parameters.Add(new SQLiteParameter("@idUsuario", id));
+        command.Parameters.Add(new SqliteParameter("@idUsuario", id));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -160,11 +160,11 @@ public class TableroRepository : ITableroRepository
     // Eliminar un tablero por ID.
     public void Remove(int id)
     {
-        using(SQLiteConnection connection = new (_cadenaConexion))
+        using(SqliteConnection connection = new (_cadenaConexion))
         {
-            SQLiteCommand command = connection.CreateCommand();
+            SqliteCommand command = connection.CreateCommand();
             command.CommandText = $"DELETE FROM Tablero WHERE id = @idTablero;";
-            command.Parameters.Add(new SQLiteParameter("@idTablero", id));
+            command.Parameters.Add(new SqliteParameter("@idTablero", id));
 
             connection.Open();
             

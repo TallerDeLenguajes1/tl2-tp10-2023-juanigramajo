@@ -1,4 +1,4 @@
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using tl2_tp10_2023_juanigramajo.Models;
 
 public class TareaRepository : ITareaRepository
@@ -15,17 +15,17 @@ public class TareaRepository : ITareaRepository
     {
         var query = $"INSERT INTO Tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idTablero, @nombre, @estado, @desc, @color, @idUserAsign)";
 
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
 
-            command.Parameters.Add(new SQLiteParameter("@idTablero", idTab));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tarea.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@estado", (EstadoTarea)(Convert.ToInt32(tarea.Estado))));
-            command.Parameters.Add(new SQLiteParameter("@desc", tarea.Descripcion));
-            command.Parameters.Add(new SQLiteParameter("@color", tarea.Color));
-            command.Parameters.Add(new SQLiteParameter("@idUserAsign", 0));
+            command.Parameters.Add(new SqliteParameter("@idTablero", idTab));
+            command.Parameters.Add(new SqliteParameter("@nombre", tarea.Nombre));
+            command.Parameters.Add(new SqliteParameter("@estado", (EstadoTarea)(Convert.ToInt32(tarea.Estado))));
+            command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@color", tarea.Color));
+            command.Parameters.Add(new SqliteParameter("@idUserAsign", 0));
             // la consigna pedía que no posea usuario asignado
 
             var commandENonQ = command.ExecuteNonQuery();
@@ -42,18 +42,18 @@ public class TareaRepository : ITareaRepository
     public void Update(int id, Tarea tarea)
     {
         var query = $"UPDATE Tarea SET nombre = @nombre, estado = @estado, descripcion = @desc, color = @color WHERE id = @idcambiar;";
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
 
-            // command.Parameters.Add(new SQLiteParameter("@idTablero", tarea.IdTablero));
-            command.Parameters.Add(new SQLiteParameter("@nombre", tarea.Nombre));
-            command.Parameters.Add(new SQLiteParameter("@estado", tarea.Estado));
-            command.Parameters.Add(new SQLiteParameter("@desc", tarea.Descripcion));
-            command.Parameters.Add(new SQLiteParameter("@color", tarea.Color));
-            // command.Parameters.Add(new SQLiteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
-            command.Parameters.Add(new SQLiteParameter("@idcambiar", id));
+            // command.Parameters.Add(new SqliteParameter("@idTablero", tarea.IdTablero));
+            command.Parameters.Add(new SqliteParameter("@nombre", tarea.Nombre));
+            command.Parameters.Add(new SqliteParameter("@estado", tarea.Estado));
+            command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@color", tarea.Color));
+            // command.Parameters.Add(new SqliteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
+            command.Parameters.Add(new SqliteParameter("@idcambiar", id));
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al actualizar la tarea");
@@ -66,18 +66,18 @@ public class TareaRepository : ITareaRepository
     // Obtener detalles de una tarea por su ID. (devuelve un objeto Tarea)
     public Tarea GetById(int id)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         var tarea = new Tarea();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tarea WHERE id = @idTarea";
-        command.Parameters.Add(new SQLiteParameter("@idTarea", id));
+        command.Parameters.Add(new SqliteParameter("@idTarea", id));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -101,17 +101,17 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> List()
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tarea";
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -139,18 +139,18 @@ public class TareaRepository : ITareaRepository
     // Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario, devuelve un list de tareas)
     public List<Tarea> ListByUser(int idUser)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tarea WHERE id_usuario_asignado = @idUsuario";
-        command.Parameters.Add(new SQLiteParameter("@idUsuario", idUser));
+        command.Parameters.Add(new SqliteParameter("@idUsuario", idUser));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -178,18 +178,18 @@ public class TareaRepository : ITareaRepository
     // Listar todas las tareas de un tablero específico. (recibe un idTablero, devuelve un list de tareas)
     public List<Tarea> ListByTablero(int idTab)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tarea WHERE id_tablero = @idTablero  ";
-        command.Parameters.Add(new SQLiteParameter("@idTablero", idTab));
+        command.Parameters.Add(new SqliteParameter("@idTablero", idTab));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -215,18 +215,18 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> CantxEstado(EstadoTarea estado)
     {
-        SQLiteConnection connection = new (_cadenaConexion);
+        SqliteConnection connection = new (_cadenaConexion);
 
         List<Tarea> ListaTareas = new List<Tarea>();
 
-        SQLiteCommand command = connection.CreateCommand();
+        SqliteCommand command = connection.CreateCommand();
 
         command.CommandText = "SELECT * FROM Tarea WHERE estado = @estado";
-        command.Parameters.Add(new SQLiteParameter("@estado", (EstadoTarea)(estado)));
+        command.Parameters.Add(new SqliteParameter("@estado", (EstadoTarea)(estado)));
         
 
         connection.Open();
-        using(SQLiteDataReader reader = command.ExecuteReader())
+        using(SqliteDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
@@ -254,11 +254,11 @@ public class TareaRepository : ITareaRepository
     // Eliminar una tarea (recibe un IdTarea)
     public void Remove(int id)
     {
-        using(SQLiteConnection connection = new (_cadenaConexion))
+        using(SqliteConnection connection = new (_cadenaConexion))
         {
-            SQLiteCommand command = connection.CreateCommand();
+            SqliteCommand command = connection.CreateCommand();
             command.CommandText = $"DELETE FROM Tarea WHERE id = @idTarea;";
-            command.Parameters.Add(new SQLiteParameter("@idTarea", id));
+            command.Parameters.Add(new SqliteParameter("@idTarea", id));
 
             connection.Open();
             
@@ -274,13 +274,13 @@ public class TareaRepository : ITareaRepository
     public void Asignar(int idUser, int idTarea)
     {
         var query = "UPDATE Tarea SET id_usuario_asignado = @idUser WHERE Id = idTarea";
-        using (SQLiteConnection connection = new (_cadenaConexion))
+        using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
-            var command = new SQLiteCommand(query, connection);
+            var command = new SqliteCommand(query, connection);
 
-            command.Parameters.Add(new SQLiteParameter("@idUser", idUser));
-            command.Parameters.Add(new SQLiteParameter("@idTarea", idTarea));
+            command.Parameters.Add(new SqliteParameter("@idUser", idUser));
+            command.Parameters.Add(new SqliteParameter("@idTarea", idTarea));
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al modificar la tarea");
