@@ -38,6 +38,7 @@
 ---
 
 ## Se puede agregar:
+Ofrecer colores y poder agregar colores en tareas
 
 ---
 

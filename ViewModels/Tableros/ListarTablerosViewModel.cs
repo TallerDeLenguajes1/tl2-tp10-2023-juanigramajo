@@ -9,15 +9,17 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
     {
         public List<Tablero> ListadoTableros { get; set; }
         public List<Tablero> ListadoMisTableros { get; set; }
+        public string IdUsuarioPropietario { get; set; }
 
 
         public ListarTablerosViewModel(){
             
         }
 
-        public ListarTablerosViewModel(List<Tablero> tableros, List<Tablero> misTableros){
+        public ListarTablerosViewModel(List<Tablero> tableros, List<Tablero> misTableros, string idUser){
             this.ListadoTableros = tableros;
             this.ListadoMisTableros = misTableros;
+            this.IdUsuarioPropietario = idUser;
         }
     }
 }

@@ -30,13 +30,13 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 }
 
                 string rolUsuario = HttpContext.Session.GetString("Rol");
-                var idUser = HttpContext.Session.GetString("Id");
+                string idUser = HttpContext.Session.GetString("Id");
 
                 if(!isAdmin())
                 {
                     List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
                     List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, idUser);
 
                     if (ListadoTableros != null)
                     {
@@ -51,7 +51,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 {
                     List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
                     List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, idUser);
 
                     if (ListadoTableros != null)
                     {
