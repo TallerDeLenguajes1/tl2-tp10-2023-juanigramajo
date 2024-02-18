@@ -2,7 +2,7 @@ using tl2_tp10_2023_juanigramajo.Models;
 
 public interface ITableroRepository
 {
-    public Tablero Create(Tablero tablero);
+    public Tablero Create(int IdPropietario, Tablero tablero);
     public void Update(int id, Tablero tablero);
     public Tablero GetById(int id);
     public List<Tablero> List();

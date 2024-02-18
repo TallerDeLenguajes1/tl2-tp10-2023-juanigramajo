@@ -12,7 +12,7 @@ public class TableroRepository : ITableroRepository
 
     
     // Crear un nuevo tablero. (devuelve un objeto Tablero).
-    public Tablero Create(Tablero tab)
+    public Tablero Create(int IdPropietario, Tablero tab)
     {
         var query = $"INSERT INTO Tablero (id_usuario_propietario, nombre, descripcion) VALUES (@idUserProp, @nombre, @desc)";
         using (SqliteConnection connection = new (_cadenaConexion))
@@ -21,7 +21,7 @@ public class TableroRepository : ITableroRepository
             var command = new SqliteCommand(query, connection);
 
             // la consigna pedía asumir que el usuario propietario es el mismo, por eso envío un 1
-            command.Parameters.Add(new SqliteParameter("@idUserProp", 1));
+            command.Parameters.Add(new SqliteParameter("@idUserProp", IdPropietario));
             command.Parameters.Add(new SqliteParameter("@nombre", tab.Nombre));
             command.Parameters.Add(new SqliteParameter("@desc", tab.Descripcion));
 

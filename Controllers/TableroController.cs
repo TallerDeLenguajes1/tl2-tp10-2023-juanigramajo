@@ -34,8 +34,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
                 if(!isAdmin())
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoMisTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
                     ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
 
                     if (ListadoTableros != null)
@@ -49,8 +49,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 } 
                 else 
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoMisTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
                     ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
 
                     if (ListadoTableros != null)
@@ -89,7 +89,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     return RedirectToAction("Index");
                 }
 
-                return View(new CrearTableroViewModel());                
+                return View(new CrearTableroViewModel(Convert.ToInt32(HttpContext.Session.GetString("Id"))));                
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
 
                 Tablero tablero = new Tablero(crearTableroVM);
-                _repositorioTablero.Create(tablero);
+                _repositorioTablero.Create(crearTableroVM.IdUsuarioPropietario, tablero);
 
                 return RedirectToAction("Index");
             }

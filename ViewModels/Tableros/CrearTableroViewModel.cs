@@ -25,6 +25,10 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
         
         }
 
+        public CrearTableroViewModel(int IdUserProp){
+            this.IdUsuarioPropietario = IdUserProp;
+        }
+
         public CrearTableroViewModel(Tablero tablero){
             this.IdUsuarioPropietario = tablero.IdUsuarioPropietario;
             this.Nombre = tablero.Nombre;
