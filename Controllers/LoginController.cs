@@ -2,7 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
 using tl2_tp10_2023_juanigramajo.ViewModels;
-using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
@@ -19,39 +18,75 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         }
 
 
-         public IActionResult Index()
+        public IActionResult Index()
         {
-            return View(new HerramientasUsuariosViewModel());
+            return View(new LoginViewModel());
         }
 
 
         [HttpPost]
-        public IActionResult Login(HerramientasUsuariosViewModel HerramientaUsuarioVM)
+        public IActionResult Login(LoginViewModel LoginVM)
         {
             List<Usuario> ListadoUsuarios = repositorioUsuario.List();
-            Usuario usuarioLoggeado = ListadoUsuarios.FirstOrDefault(user => user.NombreDeUsuario == HerramientaUsuarioVM.LoginVM.NombreDeUsuario && user.Password == HerramientaUsuarioVM.LoginVM.Password);
-
-            if (usuarioLoggeado == null)
+            Usuario usuarioLoggeado = ListadoUsuarios.FirstOrDefault(user => user.NombreDeUsuario == LoginVM.NombreDeUsuario && user.Password == LoginVM.Password);
+            try
             {
-                TempData["MensajeError"] = "Nombre de usuario o contraseña incorrectos.";
-                _logger.LogWarning($"Intento de acceso invalido - Usuario: [ {HerramientaUsuarioVM.LoginVM.NombreDeUsuario} ] Clave ingresada: [ {HerramientaUsuarioVM.LoginVM.Password} ]");
-                return RedirectToAction("Index");
-            } else
+                if (usuarioLoggeado == null)
+                {
+                    TempData["MensajeError"] = "Nombre de usuario o contraseña incorrectos.";
+                    _logger.LogWarning($"Intento de acceso invalido - Usuario: [ {LoginVM.NombreDeUsuario} ] Clave ingresada: [ {LoginVM.Password} ]");
+                    return RedirectToAction("Index");
+                } else
+                {
+                    loggearUsuario(usuarioLoggeado);
+                    _logger.LogInformation($"El usuario [ {LoginVM.NombreDeUsuario} ] ingresó corecctamente.");
+                    return View("~/Views/Home/Index.cshtml");
+                }
+            }
+            catch (Exception ex)
             {
-                HerramientasUsuariosViewModel herramientasUsuarioVM = loggearUsuario(usuarioLoggeado);
-                _logger.LogInformation($"El usuario [ {HerramientaUsuarioVM.LoginVM.NombreDeUsuario} ] ingresó corecctamente.");
-                return View("~/Views/Home/Index.cshtml", herramientasUsuarioVM);
+                _logger.LogError(ex.Message);
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToRoute(new { controller = "Home", action = "Error" });
             }
         }
 
-        private HerramientasUsuariosViewModel loggearUsuario(Usuario usuario)
+        private void loggearUsuario(Usuario usuario)
         {
             HttpContext.Session.SetString("Id", usuario.Id.ToString());
             HttpContext.Session.SetString("NombreDeUsuario", usuario.NombreDeUsuario);
             HttpContext.Session.SetString("Rol", usuario.RolDelUsuario.ToString());
+        }
 
-            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
-            return (herramientasVM);
+        public IActionResult Logout()
+        {
+            try
+            {
+                Usuario userLogout = new Usuario(HttpContext.Session.GetString("NombreDeUsuario"));
+
+                if(logoutUsuario())
+                {
+                    _logger.LogInformation($"El usuario [ {userLogout.NombreDeUsuario} ] cerró sesió corecctamente.");
+                }
+
+                return View(userLogout);         
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return RedirectToRoute(new { controller = "Home", action = "Error" });
+            }
+        }
+
+        private bool logoutUsuario()
+        {
+            HttpContext.Session.Remove("Id");
+            HttpContext.Session.Remove("NombreDeUsuario");
+            HttpContext.Session.Remove("Rol");
+            HttpContext.Session.Clear();
+
+            return true;
         }
 
 

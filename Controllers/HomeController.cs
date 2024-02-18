@@ -16,28 +16,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        if (!isLogged())
-        {
-            return View(new HerramientasUsuariosViewModel());
-        }
-        else 
-        {
-            HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
-            return View(herramientasVM);
-        }
+        return View();
     }
 
     public IActionResult Privacy()
     {
         return View();
-    }
-
-    private bool isLogged()
-    {
-        if (HttpContext.Session.GetString("Id") != null) 
-            return true;
-            
-        return false;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

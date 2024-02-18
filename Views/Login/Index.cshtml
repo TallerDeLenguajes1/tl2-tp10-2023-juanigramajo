@@ -1,5 +1,5 @@
 
-@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.HerramientasUsuariosViewModel
+@model tl2_tp10_2023_juanigramajo.ViewModels.LoginViewModel
 
 @if (TempData["ErrorMessage"] != null)
 {
@@ -10,15 +10,15 @@
 
 <form asp-controller="Login" asp-action="Login" method="post">
     <div class="form-group">
-        <label asp-for="@Model.LoginVM.NombreDeUsuario"></label>
-        <input asp-for="@Model.LoginVM.NombreDeUsuario" class="form-control"/>
-        <span asp-validation-for="@Model.LoginVM.NombreDeUsuario" class="text-danger"></span>    
+        <label asp-for="@Model.NombreDeUsuario"></label>
+        <input asp-for="@Model.NombreDeUsuario" class="form-control"/>
+        <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>    
     </div>
 
     <div class="mb-3" class="form-group">
-        <label asp-for="@Model.LoginVM.Password"></label>
-        <input asp-for="@Model.LoginVM.Password" class="form-control" />
-        <span asp-validation-for="@Model.LoginVM.Password" class="text-danger"></span>
+        <label asp-for="@Model.Password"></label>
+        <input asp-for="@Model.Password" class="form-control" />
+        <span asp-validation-for="@Model.Password" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-info">Iniciar Sesión</button>

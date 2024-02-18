@@ -22,7 +22,7 @@ public class UsuarioRepository : IUsuarioRepository
 
             command.Parameters.Add(new SqliteParameter("@nombreDeUsuario", usuario.NombreDeUsuario));
             command.Parameters.Add(new SqliteParameter("@contra", usuario.Password));
-            command.Parameters.Add(new SqliteParameter("@rolDelUsuario", (Rol)(Convert.ToInt32(usuario.RolDelUsuario))));
+            command.Parameters.Add(new SqliteParameter("@rolDelUsuario", (Rol)Convert.ToInt32(usuario.RolDelUsuario)));
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al crear el usuario");

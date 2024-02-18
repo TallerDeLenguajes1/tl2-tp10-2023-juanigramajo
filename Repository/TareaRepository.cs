@@ -10,22 +10,23 @@ public class TareaRepository : ITareaRepository
         _cadenaConexion = cadenaConexion;
     }
 
+
     // Crear una nueva tarea en un tablero. (recibe un idTablero, devuelve un objeto Tarea)
-    public Tarea Create(int idTab, Tarea tarea)
+    public Tarea Create(Tarea tarea)
     {
-        var query = $"INSERT INTO Tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idTablero, @nombre, @estado, @desc, @color, @idUserAsign)";
+        var query = $"INSERT INTO Tarea (id_tablero, nombre, estado, descripcion, color, id_usuario_asignado) VALUES (@idTablero, @nomb, @estad, @desc, @color, @idUserAsign)";
 
         using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SqliteCommand(query, connection);
 
-            command.Parameters.Add(new SqliteParameter("@idTablero", idTab));
-            command.Parameters.Add(new SqliteParameter("@nombre", tarea.Nombre));
-            command.Parameters.Add(new SqliteParameter("@estado", (EstadoTarea)(Convert.ToInt32(tarea.Estado))));
+            command.Parameters.Add(new SqliteParameter("@idTablero", 3));
+            command.Parameters.Add(new SqliteParameter("@nomb", tarea.Nombre));
+            command.Parameters.Add(new SqliteParameter("@estad", (EstadoTarea)Convert.ToInt32(tarea.Estado)));
             command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
             command.Parameters.Add(new SqliteParameter("@color", tarea.Color));
-            command.Parameters.Add(new SqliteParameter("@idUserAsign", 0));
+            command.Parameters.Add(new SqliteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
             // la consigna pedía que no posea usuario asignado
 
             var commandENonQ = command.ExecuteNonQuery();
@@ -36,7 +37,7 @@ public class TareaRepository : ITareaRepository
 
         return tarea;
     }
-
+    
 
     // Modificar una tarea existente. (recibe un id y un objeto Tarea)
     public void Update(int id, Tarea tarea)

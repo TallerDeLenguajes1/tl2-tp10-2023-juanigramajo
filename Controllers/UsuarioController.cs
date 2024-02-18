@@ -30,11 +30,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
                 List<Usuario> ListadoUsuarios = _repositorioUsuario.List();
                 ListarUsuariosViewModel listarUsuariosVM = new ListarUsuariosViewModel(ListadoUsuarios);
-                HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(listarUsuariosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
                 if (ListadoUsuarios != null)
                 {
-                    return View(herramientasVM);
+                    return View(listarUsuariosVM);
                 }
                 else
                 {
@@ -56,7 +55,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         {   
             try
             {
-                return View(new HerramientasUsuariosViewModel());
+                return View(new CrearUsuarioViewModel());
             }
             catch (Exception ex)
             {
@@ -107,9 +106,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 }
 
                 ModificarUsuarioViewModel modificarUsuarioVM = new ModificarUsuarioViewModel(_repositorioUsuario.GetById(idUsuario));
-                HerramientasUsuariosViewModel herramientasVM = new HerramientasUsuariosViewModel(modificarUsuarioVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
 
-                return View(herramientasVM);                
+                return View(modificarUsuarioVM);                
             }
             catch (Exception ex)
             {
@@ -195,6 +193,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
         private bool isAdmin()
         {
             if (HttpContext.Session.GetString("Rol") == "Administrador") 
+            
                 return true;
                 
             return false;

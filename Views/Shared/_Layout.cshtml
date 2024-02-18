@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var IdDeSesion = Context.Session.GetString("Id");
+    var NombreDeSesion= Context.Session.GetString("NombreDeUsuario");
+    var RolDeSesion = Context.Session.GetString("Rol");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,9 +31,13 @@
                         @* <li class="nav-item"> 
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
-                        <li class="nav-item"> 
+
+                        @if(string.IsNullOrEmpty(IdDeSesion) && string.IsNullOrEmpty(NombreDeSesion) && string.IsNullOrEmpty(RolDeSesion)) {
+                            <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                        </li>
+                            </li>
+                        }
+
                         <li class="nav-item"> 
                             <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Listado de usuarios</a>
                         </li>
@@ -46,6 +56,12 @@
                         <li class="nav-item"> 
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="CrearTarea">Crear tarea</a>
                         </li>
+
+                        @if(!string.IsNullOrEmpty(IdDeSesion) && !string.IsNullOrEmpty(NombreDeSesion) && !string.IsNullOrEmpty(RolDeSesion)) {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

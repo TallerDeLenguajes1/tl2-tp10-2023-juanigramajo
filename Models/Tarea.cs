@@ -27,12 +27,10 @@ namespace tl2_tp10_2023_juanigramajo.Models
         }
 
         public Tarea(CrearTareaViewModel CrearTareaVM){
-            this.IdTablero = CrearTareaVM.IdTablero;
             this.Nombre = CrearTareaVM.Nombre;
             this.Descripcion = CrearTareaVM.Descripcion;
             this.Color = CrearTareaVM.Color;
             this.Estado = CrearTareaVM.Estado;
-            this.IdUsuarioAsignado = CrearTareaVM.IdUsuarioAsignado;
         }
 
         public Tarea(ModificarTareaViewModel ModificarTareaVM){

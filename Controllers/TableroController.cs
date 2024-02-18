@@ -30,17 +30,17 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 }
 
                 string rolUsuario = HttpContext.Session.GetString("Rol");
+                var idUser = HttpContext.Session.GetString("Id");
 
                 if(!isAdmin())
                 {
-                    var idUser = HttpContext.Session.GetString("Id");
                     List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
-                    HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
+                    List<Tablero> ListadoMisTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
 
                     if (ListadoTableros != null)
                     {
-                        return View(herramientasUsuariosVM);
+                        return View(listarTablerosVM);
                     }
                     else
                     {
@@ -49,14 +49,13 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 } 
                 else 
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.List();
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros);
-                    HerramientasUsuariosViewModel herramientasUsuariosVM = new HerramientasUsuariosViewModel(listarTablerosVM, HttpContext.Session.GetString("Id"), HttpContext.Session.GetString("NombreDeUsuario"), HttpContext.Session.GetString("Rol"));
+                    List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoMisTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros);
 
                     if (ListadoTableros != null)
                     {
-                        ViewBag.Rol = rolUsuario;
-                        return View(herramientasUsuariosVM);
+                        return View(listarTablerosVM);
                     }
                     else
                     {

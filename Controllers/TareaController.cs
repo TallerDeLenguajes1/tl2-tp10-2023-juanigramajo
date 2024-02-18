@@ -62,7 +62,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -85,7 +85,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -105,7 +105,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 Tarea tarea = new Tarea(crearTareaVM);
 
                 // la consigna pedía asumir que el tablero es el mismo, por eso envío un 1
-                _repositorioTarea.Create(1, tarea);
+                _repositorioTarea.Create(tarea);
 
                 return RedirectToAction("Index");                
             }
@@ -114,7 +114,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
     
@@ -151,7 +151,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -190,7 +190,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -226,7 +226,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 

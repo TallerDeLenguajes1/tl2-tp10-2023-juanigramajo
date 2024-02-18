@@ -1,14 +1,12 @@
-﻿
-@model tl2_tp10_2023_juanigramajo.ViewModels.Usuarios.HerramientasUsuariosViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
+    var nombreDeSesion = Context.Session.GetString("NombreDeUsuario");
 }
 
 <div class="text-center">
-    @if (Model.NombreDeSesion != null)
+    @if (nombreDeSesion != null)
     {
-        <h1 class="display-4">Welcome @Model.NombreDeSesion</h1>
+        <h1 class="display-4">Welcome @nombreDeSesion</h1>
     } else
     {
         <h1 class="display-4">Welcome</h1>

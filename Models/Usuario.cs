@@ -20,6 +20,10 @@ namespace tl2_tp10_2023_juanigramajo.Models
         
         }
 
+        public Usuario(string nombre) {
+            this.NombreDeUsuario = nombre;            
+        }
+
         public Usuario(CrearUsuarioViewModel crearUsuarioVM){
             this.NombreDeUsuario = crearUsuarioVM.NombreDeUsuario;
             this.Password = crearUsuarioVM.Password;

@@ -157,6 +157,40 @@ public class TableroRepository : ITableroRepository
     }
 
 
+        // Listar todos los tableros que NO son de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
+    public List<Tablero> RestListByUser(int id)
+    {
+        SqliteConnection connection = new (_cadenaConexion);
+
+        List<Tablero> ListaTableros = new List<Tablero>();
+
+        SqliteCommand command = connection.CreateCommand();
+
+        command.CommandText = "SELECT * FROM Tablero WHERE id_usuario_propietario != @idUsuario";
+        command.Parameters.Add(new SqliteParameter("@idUsuario", id));
+        
+
+        connection.Open();
+        using(SqliteDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var tab = new Tablero();
+                tab.Id = Convert.ToInt32(reader["id"]);
+                tab.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                tab.Nombre = reader["nombre"].ToString();
+                tab.Descripcion = reader["descripcion"].ToString();
+                ListaTableros.Add(tab);
+            }
+        }
+        connection.Close();
+
+        if (ListaTableros == null) throw new Exception($"No se encontraron tableros asignados al usuario en la base de datos");
+
+        return ListaTableros;
+    }
+
+
     // Eliminar un tablero por ID.
     public void Remove(int id)
     {

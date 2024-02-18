@@ -2,7 +2,7 @@ using tl2_tp10_2023_juanigramajo.Models;
 
 public interface ITareaRepository
 {
-    public Tarea Create(int idTab, Tarea tarea);
+    public Tarea Create(Tarea tarea);
     public void Update(int id, Tarea tarea);
     public Tarea GetById(int id);
     public List<Tarea> List();
