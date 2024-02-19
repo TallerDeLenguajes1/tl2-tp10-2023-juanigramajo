@@ -21,7 +21,7 @@ public class TareaRepository : ITareaRepository
             connection.Open();
             var command = new SqliteCommand(query, connection);
 
-            command.Parameters.Add(new SqliteParameter("@idTablero", 3));
+            command.Parameters.Add(new SqliteParameter("@idTablero", tarea.IdTablero));
             command.Parameters.Add(new SqliteParameter("@nomb", tarea.Nombre));
             command.Parameters.Add(new SqliteParameter("@estad", (EstadoTarea)Convert.ToInt32(tarea.Estado)));
             command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
@@ -47,7 +47,7 @@ public class TareaRepository : ITareaRepository
             connection.Open();
             var command = new SqliteCommand(query, connection);
 
-            // command.Parameters.Add(new SqliteParameter("@idTablero", tarea.IdTablero));
+            command.Parameters.Add(new SqliteParameter("@idTablero", tarea.IdTablero));
             command.Parameters.Add(new SqliteParameter("@nombre", tarea.Nombre));
             command.Parameters.Add(new SqliteParameter("@estado", tarea.Estado));
             command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));

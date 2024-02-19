@@ -5,6 +5,12 @@
 <form asp-controller="Tarea" asp-action="CrearTarea">
 
     <div class="mb-3" class="form-group">
+        <label asp-for="@Model.IdTablero" class="form-label"></label>
+        <input asp-for="@Model.IdTablero" class="form-control"/>
+        <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3" class="form-group">
         <label asp-for="@Model.Nombre" class="form-label"></label>
         <input asp-for="@Model.Nombre" class="form-control"/>
         <span asp-validation-for="@Model.Nombre" class="text-danger"></span>

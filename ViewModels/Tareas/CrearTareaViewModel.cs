@@ -7,9 +7,9 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
 {
     public class CrearTareaViewModel
     {
-        /* [Required(ErrorMessage = "Este campo es requerido.")]
-        [Display(Name = "Id del tablero")]
-        public int IdTablero { get; set; } */
+        [Required(ErrorMessage = "Este campo es requerido.")]
+        [Display(Name = "Asignar a un tablero")]
+        public int IdTablero { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido.")]
         [StringLength(100, ErrorMessage = "El nombre de la tarea no puede contener más de 100 caracteres")]
@@ -39,7 +39,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
 
 
         public CrearTareaViewModel(Tarea tarea){
-            // this.IdTablero = tarea.IdTablero;
+            this.IdTablero = tarea.IdTablero;
             this.Nombre = tarea.Nombre;
             this.Descripcion = tarea.Descripcion;
             this.Color = tarea.Color;
