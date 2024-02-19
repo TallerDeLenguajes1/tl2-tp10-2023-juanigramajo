@@ -9,6 +9,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
     {
         private ITareaRepository _repositorioTarea;
         private readonly ILogger<TareaController> _logger;
+        
 
 
         public TareaController(ILogger<TareaController> logger, ITareaRepository tareaRepository)
@@ -78,6 +79,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
 
+
                 return View(new CrearTareaViewModel());                
             }
             catch (Exception ex)
@@ -88,7 +90,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 return RedirectToAction("Error");
             }
         }
-
+        
     
         [HttpPost]
         public IActionResult CrearTarea(CrearTareaViewModel crearTareaVM)
@@ -103,8 +105,6 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 if(!ModelState.IsValid) return RedirectToAction("CrearTarea");
 
                 Tarea tarea = new Tarea(crearTareaVM);
-
-                // la consigna pedía asumir que el tablero es el mismo, por eso envío un 1
                 _repositorioTarea.Create(tarea);
 
                 return RedirectToAction("Index");                

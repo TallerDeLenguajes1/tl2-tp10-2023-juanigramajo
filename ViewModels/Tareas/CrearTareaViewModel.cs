@@ -28,13 +28,15 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
         [Display(Name = "Estado")]
         public EstadoTarea Estado { get; set; }        
 
-        /* [Display(Name = "Id del usuario asignado")]
-        public int IdUsuarioAsignado { get; set; } */
+        [Display(Name = "Asignar un usuario")]
+        public int IdUsuarioAsignado { get; set; }
+
 
 
         public CrearTareaViewModel(){
 
         }
+
 
         public CrearTareaViewModel(Tarea tarea){
             // this.IdTablero = tarea.IdTablero;
@@ -42,7 +44,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
             this.Descripcion = tarea.Descripcion;
             this.Color = tarea.Color;
             this.Estado = tarea.Estado;
-            // this.IdUsuarioAsignado = tarea.IdUsuarioAsignado;
+            this.IdUsuarioAsignado = tarea.IdUsuarioAsignado;
         }
     }
 }

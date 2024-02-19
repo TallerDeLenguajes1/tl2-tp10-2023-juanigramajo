@@ -30,7 +30,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
         [Display(Name = "Estado")] 
         public EstadoTarea Estado { get; set; }        
 
-        [Display(Name = "Id del usuario asignado")] 
+        [Display(Name = "Asignar un usuario")]
         public int IdUsuarioAsignado { get; set; }
 
 

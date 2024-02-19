@@ -27,7 +27,6 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
             command.Parameters.Add(new SqliteParameter("@color", tarea.Color));
             command.Parameters.Add(new SqliteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
-            // la consigna pedía que no posea usuario asignado
 
             var commandENonQ = command.ExecuteNonQuery();
             if (commandENonQ == 0) throw new Exception("Se produjo un error al crear la tarea");
@@ -42,7 +41,7 @@ public class TareaRepository : ITareaRepository
     // Modificar una tarea existente. (recibe un id y un objeto Tarea)
     public void Update(int id, Tarea tarea)
     {
-        var query = $"UPDATE Tarea SET nombre = @nombre, estado = @estado, descripcion = @desc, color = @color WHERE id = @idcambiar;";
+        var query = $"UPDATE Tarea SET nombre = @nombre, estado = @estado, descripcion = @desc, color = @color, id_usuario_asignado = @idUserAsign WHERE id = @idcambiar;";
         using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
@@ -53,7 +52,7 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SqliteParameter("@estado", tarea.Estado));
             command.Parameters.Add(new SqliteParameter("@desc", tarea.Descripcion));
             command.Parameters.Add(new SqliteParameter("@color", tarea.Color));
-            // command.Parameters.Add(new SqliteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
+            command.Parameters.Add(new SqliteParameter("@idUserAsign", tarea.IdUsuarioAsignado));
             command.Parameters.Add(new SqliteParameter("@idcambiar", id));
 
             var commandENonQ = command.ExecuteNonQuery();
@@ -85,11 +84,10 @@ public class TareaRepository : ITareaRepository
                 tarea.Id = Convert.ToInt32(reader["id"]);
                 tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                 tarea.Nombre = reader["nombre"].ToString();
-                tarea.Estado = (EstadoTarea)(Convert.ToInt32(reader["estado"]));
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                 tarea.Descripcion = reader["descripcion"].ToString();
                 tarea.Color = reader["color"].ToString();
-                // tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                tarea.IdUsuarioAsignado = 0;
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
             }
         }
         connection.Close();
@@ -120,11 +118,10 @@ public class TareaRepository : ITareaRepository
                 tarea.Id = Convert.ToInt32(reader["id"]);
                 tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                 tarea.Nombre = reader["nombre"].ToString();
-                tarea.Estado = (EstadoTarea)(Convert.ToInt32(reader["estado"]));
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                 tarea.Descripcion = reader["descripcion"].ToString();
                 tarea.Color = reader["color"].ToString();
-                // tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                tarea.IdUsuarioAsignado = 0;
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                 ListaTareas.Add(tarea);
             }
         }
@@ -159,11 +156,10 @@ public class TareaRepository : ITareaRepository
                 tarea.Id = Convert.ToInt32(reader["id"]);
                 tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                 tarea.Nombre = reader["nombre"].ToString();
-                tarea.Estado = (EstadoTarea)(Convert.ToInt32(reader["estado"]));
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                 tarea.Descripcion = reader["descripcion"].ToString();
                 tarea.Color = reader["color"].ToString();
-                // tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                tarea.IdUsuarioAsignado = 0;
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                 ListaTareas.Add(tarea);
             }
         }
@@ -198,11 +194,10 @@ public class TareaRepository : ITareaRepository
                 tarea.Id = Convert.ToInt32(reader["id"]);
                 tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                 tarea.Nombre = reader["nombre"].ToString();
-                tarea.Estado = (EstadoTarea)(Convert.ToInt32(reader["estado"]));
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                 tarea.Descripcion = reader["descripcion"].ToString();
                 tarea.Color = reader["color"].ToString();
-                // tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                tarea.IdUsuarioAsignado = 0;
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                 ListaTareas.Add(tarea);
             }
         }
@@ -235,11 +230,10 @@ public class TareaRepository : ITareaRepository
                 tarea.Id = Convert.ToInt32(reader["id"]);
                 tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                 tarea.Nombre = reader["nombre"].ToString();
-                tarea.Estado = (EstadoTarea)(Convert.ToInt32(reader["estado"]));
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
                 tarea.Descripcion = reader["descripcion"].ToString();
                 tarea.Color = reader["color"].ToString();
-                // tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                tarea.IdUsuarioAsignado = 0;
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                 ListaTareas.Add(tarea);
             }
         }
