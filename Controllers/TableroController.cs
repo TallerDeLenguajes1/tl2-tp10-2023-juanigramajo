@@ -34,9 +34,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
                 if(!isAdmin())
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoTableros = _repositorioTablero.OthersListByUser(Convert.ToInt32(idUser));
                     List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, idUser);
+                    List<Tablero> ListadoTareasEnOtroTablero = _repositorioTablero.ListByTareasEnOtroTablero(Convert.ToInt32(idUser));
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, ListadoTareasEnOtroTablero, idUser);
 
                     if (ListadoTableros != null)
                     {
@@ -49,9 +50,10 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 } 
                 else 
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.RestListByUser(Convert.ToInt32(idUser));
+                    List<Tablero> ListadoTableros = _repositorioTablero.OthersListByUser(Convert.ToInt32(idUser));
                     List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, idUser);
+                    List<Tablero> ListadoTareasEnOtroTablero = _repositorioTablero.ListByTareasEnOtroTablero(Convert.ToInt32(idUser));
+                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, ListadoTareasEnOtroTablero, idUser);
 
                     if (ListadoTableros != null)
                     {
@@ -68,7 +70,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
             
         }
@@ -96,7 +98,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -129,7 +131,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
     
@@ -159,7 +161,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -191,7 +193,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 
@@ -220,7 +222,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.ToString());
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new {controller = "Shared", action = "Error"});
+                return RedirectToAction("Error");
             }
         }
 

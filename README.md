@@ -34,6 +34,7 @@
     no importa si se es operario o admin)
 - Advertir al usuario de los errores del try catch\
 - Para crear una tarea, el IdTablero es FOREIGN KEY asi que si no esta el tablero dara un error, dar a corregir
+- Eliminar los tableros que ya se muestran en el segundo cuadro
 
 ---
 
@@ -52,7 +53,10 @@ Ofrecer colores y poder agregar colores en tareas
 ### Para Proyecto Final únicamente.
 Implemente la funcionalidad de asignar usuarios a tareas. El funcionamiento debería ser el siguiente:
 - c. El usuario logueado debe poder asignar un usuario a las tareas de las que es propietario.
-- d. El usuario logueado debería poder ver en la lista de tableros, además de los tableros que le pertenecen, todos los tableros donde tenga tareas asignadas. Los permisos del usuario logueado para tableros que no le pertenecen son:
+
+- d. El usuario logueado debería poder ver en la lista de tableros, además de los tableros que le pertenecen, todos los tableros donde tenga tareas asignadas.
+
+Los permisos del usuario logueado para tableros que no le pertenecen son:
 - Tableros: Solo lectura
 - Tareas no asignadas: Solo lectura.
 - Tareas asignadas: Lectura y modificación, pero únicamente para modificar el estado de la tarea.

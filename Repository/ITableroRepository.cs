@@ -7,6 +7,7 @@ public interface ITableroRepository
     public Tablero GetById(int id);
     public List<Tablero> List();
     public List<Tablero> ListByUser(int id);
-    public List<Tablero> RestListByUser(int id);
+    List<Tablero> ListByTareasEnOtroTablero(int idUser);
+    public List<Tablero> OthersListByUser(int id);
     public void Remove(int id);
 }

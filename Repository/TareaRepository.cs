@@ -274,7 +274,7 @@ public class TareaRepository : ITareaRepository
     // Asignar Usuario a Tarea (recibe idUsuario y un idTarea)
     public void Asignar(int idUser, int idTarea)
     {
-        var query = "UPDATE Tarea SET id_usuario_asignado = @idUser WHERE Id = idTarea";
+        var query = "UPDATE Tarea SET id_usuario_asignado = @idUser WHERE Id = @idTarea";
         using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
@@ -288,6 +288,5 @@ public class TareaRepository : ITareaRepository
 
             connection.Close();
         }
-
     }
 }

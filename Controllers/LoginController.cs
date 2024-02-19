@@ -48,7 +48,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 _logger.LogError(ex.Message);
                 TempData["ErrorMessage"] = ex.Message;
                 TempData["StackTrace"] = ex.StackTrace;
-                return RedirectToRoute(new { controller = "Home", action = "Error" });
+                return RedirectToAction("Error");
             }
         }
 
@@ -75,7 +75,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return RedirectToRoute(new { controller = "Home", action = "Error" });
+                return RedirectToAction("Error");
             }
         }
 

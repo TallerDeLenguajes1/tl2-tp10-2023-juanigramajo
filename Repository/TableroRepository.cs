@@ -157,8 +157,43 @@ public class TableroRepository : ITableroRepository
     }
 
 
-        // Listar todos los tableros que NO son de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
-    public List<Tablero> RestListByUser(int id)
+    public List<Tablero> ListByTareasEnOtroTablero(int idUser)
+    {
+        SqliteConnection connection = new (_cadenaConexion);
+
+        List<Tablero> ListaTablerosTareasAsign = new List<Tablero>();
+
+        SqliteCommand command = connection.CreateCommand();
+
+        command.CommandText = "SELECT * FROM Tarea t" +
+                            "INNER JOIN Tablero tab ON (id_tablero = tab.id)" +
+                            "WHERE (id_usuario_asignado = @idUser AND id_tablero NOT IN (SELECT id FROM Tablero WHERE id_usuario_propietario = @idUser))";
+
+        command.Parameters.Add(new SqliteParameter("@idUser", idUser));
+        
+        connection.Open();
+        using(SqliteDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var tab = new Tablero();
+                tab.Id = Convert.ToInt32(reader["id"]);
+                tab.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                tab.Nombre = reader["nombre"].ToString();
+                tab.Descripcion = reader["descripcion"].ToString();
+                ListaTablerosTareasAsign.Add(tab);
+            }
+        }
+        connection.Close();
+
+        if (ListaTablerosTareasAsign == null) throw new Exception($"No se encontraron tableros asignados al usuario en la base de datos");
+
+        return ListaTablerosTareasAsign;
+    }
+
+
+    // Listar todos los tableros que NO son de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
+    public List<Tablero> OthersListByUser(int idUser)
     {
         SqliteConnection connection = new (_cadenaConexion);
 
@@ -166,8 +201,14 @@ public class TableroRepository : ITableroRepository
 
         SqliteCommand command = connection.CreateCommand();
 
-        command.CommandText = "SELECT * FROM Tablero WHERE id_usuario_propietario != @idUsuario";
-        command.Parameters.Add(new SqliteParameter("@idUsuario", id));
+       // command.CommandText = "SELECT * FROM Tablero WHERE id_usuario_propietario != @idUser";
+
+        command.CommandText = "SELECT * FROM Tarea t" +
+                            "INNER JOIN Tablero tab ON (tab.id = id_tablero)" +
+                            "WHERE id_usuario_propietario != @idUser AND id_tablero NOT IN (SELECT id FROM Tablero WHERE id_usuario_propietario != @idUser)";
+        
+        
+        command.Parameters.Add(new SqliteParameter("@idUser", idUser));
         
 
         connection.Open();
