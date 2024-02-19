@@ -16,107 +16,81 @@
 
 <h2>Mis Tableros</h2>
 
-<table class="table table-success table-striped">
-    <thead>
-        <tr>
-            <th hidden>ID</th>
-            <th>Id usuario propietario</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tab in Model.ListadoMisTableros)
-        {
-            <tr>
-                <td hidden>@tab.Id</td>
-                <td >@tab.IdUsuarioPropietario</td>
-                <td>@tab.Nombre</td>
-                <td>@tab.Descripcion</td>
-                <td>
-                    @if (RolDeSesion == "Administrador" || IdDeSesion == Model.IdUsuarioPropietario)
-                    {
-                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
-                        <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
-                    } else
-                    {
-                        <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
-                    }    
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var tab in Model.ListadoMisTableros)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h7 class="card-title" hidden>ID: @tab.Id</h7>
+            <h7 class="card-title">Usuario propietario: @tab.IdUsuarioPropietario</h7>
+            <h5 class="card-title">@tab.Nombre</h5>
+            <p class="card-text">@tab.Descripcion</p>
+        
+            <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tab.Id" class="btn btn-info">Ver tablero</a>
+
+        
+            @if (RolDeSesion == "Administrador" || IdDeSesion == Model.IdUsuarioPropietario)
+            {
+                <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
+                <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
+            } else
+            {
+                <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
+            }
+        </div>
+    </div>
+} 
 
 
 <h2>Mis tareas en otros tableros</h2>
 
-<table class="table table-success table-striped">
-    <thead>
-        <tr>
-            <th hidden>ID</th>
-            <th>Id usuario propietario</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tab in Model.ListadoTareasEnOtroTablero)
-        {
-            <tr>
-                <td hidden>@tab.Id</td>
-                <td >@tab.IdUsuarioPropietario</td>
-                <td>@tab.Nombre</td>
-                <td>@tab.Descripcion</td>
-                <td>
-                    @if (RolDeSesion == "Administrador")
-                    {
-                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
-                        <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
-                    } else
-                    {
-                        <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
-                    }    
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var tab in Model.ListadoTareasEnOtroTablero)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h7 class="card-title" hidden>ID: @tab.Id</h7>
+            <h7 class="card-title">Usuario propietario: @tab.IdUsuarioPropietario</h7>
+            <h5 class="card-title">@tab.Nombre</h5>
+            <p class="card-text">@tab.Descripcion</p>
+        
+        
+            @if (RolDeSesion == "Administrador" || IdDeSesion == Model.IdUsuarioPropietario)
+            {
+                <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
+                <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
+            } else
+            {
+                <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
+            }
+        </div>
+    </div>
+}
+
 
 
 <h2>Explorar más tableros</h2>
 
-<table class="table table-success table-striped">
-    <thead>
-        <tr>
-            <th hidden>ID</th>
-            <th>Id usuario propietario</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tab in Model.ListadoTableros)
-        {
-            <tr>
-                <td hidden>@tab.Id</td>
-                <td >@tab.IdUsuarioPropietario</td>
-                <td>@tab.Nombre</td>
-                <td>@tab.Descripcion</td>
-                <td>
-                    @if (RolDeSesion == "Administrador")
-                    {
-                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
-                        <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
-                    } else
-                    {
-                        <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
-                    }    
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var tab in Model.ListadoTableros)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+            <h7 class="card-title" hidden>ID: @tab.Id</h7>
+            <h7 class="card-title">Usuario propietario: @tab.IdUsuarioPropietario</h7>
+            <h5 class="card-title">@tab.Nombre</h5>
+            <p class="card-text">@tab.Descripcion</p>
+
+
+        
+            @if (RolDeSesion == "Administrador" || IdDeSesion == Model.IdUsuarioPropietario)
+            {
+                <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
+                <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>                      
+            } else
+            {
+                <span class="text-danger">No tienes permiso para editar o eliminar tableros.</span>
+            }
+        </div>
+    </div>
+}

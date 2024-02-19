@@ -13,35 +13,19 @@
 
 <h2>Listado de Tareas</h2>
 
-<table class="table table-success table-striped">
-    <thead>
-        <tr>
-            <th hidden>ID</th>
-            <th>Id tablero</th>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Color</th>
-            <th>Estado</th>
-            <th>Id usuario asignado</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tarea in Model.ListadoTareas)
-        {
-            <tr>
-                <td hidden>@tarea.Id</td>
-                <td>@tarea.IdTablero</td>
-                <td>@tarea.Nombre</td>
-                <td>@tarea.Descripcion</td>
-                <td>@tarea.Color</td>
-                <td>@tarea.Estado</td>
-                <td>@tarea.IdUsuarioAsignado</td>
-                <td>
-                    <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id" class="btn btn-info">Editar</a>
-                    <a asp-controller="Tarea" asp-action="DeleteTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estás seguro que quieres eliminar la tarea?')" class="btn btn-outline-danger">Eliminar</a>                      
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var tarea in Model.ListadoTareas)
+{
+    <div class="card">
+        <h5 class="card-header">@tarea.Nombre</h5>
+        <div class="card-body">
+            <h5 class="card-title">ID: @tarea.Id - </h5>
+            <h5 class="card-title" hidden>ID Tablero: @tarea.IdTablero</h5>
+            <p class="card-text">@tarea.Descripcion</p>
+            <p class="card-text">@tarea.Color</p>
+            <p class="card-text">@tarea.Estado</p>
+            <p class="card-text">@tarea.IdUsuarioAsignado</p>
+            <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id" class="btn btn-info">Editar</a>
+            <a asp-controller="Tarea" asp-action="DeleteTarea" asp-route-idTarea="@tarea.Id" onclick="return confirm('¿Estás seguro que quieres eliminar la tarea?')" class="btn btn-outline-danger">Eliminar</a>                      
+        </div>
+    </div>
+}
