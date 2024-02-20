@@ -73,6 +73,55 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
             }
         }
 
+/* 
+        public IActionResult ListXEstado()
+        {
+            try
+            {
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
+                if (!isAdmin())
+                {
+                    var idUser = HttpContext.Session.GetString("Id");
+                    List<Tarea> ListadoTareas = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
+                    ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
+
+                    if (ListadoTareas != null)
+                    {
+                        return View(ListarTareasVM);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+                else 
+                {
+                    List<Tarea> ListadoTareas = _repositorioTarea.List();
+                    ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoTareas);
+
+                    if (ListadoTareas != null)
+                    {
+                        return View(ListarTareasVM);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToAction("Error");
+            }
+        }
+ */
 
         [HttpGet]
         public IActionResult CrearTarea()
@@ -134,7 +183,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if (!isAdmin())
+                if(!isAdmin() && !(_repositorioTarea.GetById(idTarea).IdUsuarioAsignado == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {
                     var idUser = HttpContext.Session.GetString("Id");
                     List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
@@ -172,7 +221,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if (!isAdmin())
+                if(!isAdmin() && !(modificarTareaVM.IdUsuarioAsignado == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {
                     var idUser = HttpContext.Session.GetString("Id");
                     List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));
@@ -189,7 +238,8 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 Tarea tarea2 = new Tarea(modificarTareaVM);
                 _repositorioTarea.Update(tarea2.Id, tarea2);
 
-                return RedirectToAction("Index");                
+                return RedirectToAction("ListByTablero", "Tablero", new { idTablero = modificarTareaVM.IdTablero });
+                // return RedirectToAction("Index");                
             }
             catch (Exception ex)
             {
@@ -210,7 +260,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if (!isAdmin())
+                if(!isAdmin() && !(_repositorioTarea.GetById(idTarea).IdUsuarioAsignado == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {
                     var idUser = HttpContext.Session.GetString("Id");
                     List<Tarea> listadoPermitido = _repositorioTarea.ListByUser(Convert.ToInt32(idUser));

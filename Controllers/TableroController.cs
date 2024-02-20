@@ -40,7 +40,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 List<Tablero> ListadoOtrosTableros = _repositorioTablero.RestoDeTablerosListByUser(Convert.ToInt32(idUser));
                 ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoMisTableros, ListadoTareasEnOtroTablero, ListadoOtrosTableros, idUser);
 
-                if (ListadoMisTableros != null)
+                if (ListadoMisTableros != null && ListadoTareasEnOtroTablero != null && ListadoOtrosTableros != null)
                 {
                     return View(listarTablerosVM);
                 }
@@ -74,9 +74,9 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 var idUser = HttpContext.Session.GetString("Id");
                 List<Tarea> ListadoMisTareas = _repositorioTarea.ListByTableroYUser(idTablero, Convert.ToInt32(idUser));
                 List<Tarea> ListadoOtrasTareas = _repositorioTarea.ListByTableroYNOTUser(idTablero, Convert.ToInt32(idUser));
-                ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoMisTareas, ListadoOtrasTareas);
+                ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoMisTareas, ListadoOtrasTareas, idUser);
 
-                if (ListadoMisTareas != null)
+                if (ListadoMisTareas != null && ListadoOtrasTareas != null)
                 {
                     return View(ListarTareasVM);
                 }

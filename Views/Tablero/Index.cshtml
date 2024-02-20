@@ -87,7 +87,7 @@
 
                 <a asp-controller="Tablero" asp-action="ListByTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Ver tablero</a>
 
-                @if (RolDeSesion == "Administrador" || IdDeSesion == Model.IdUsuarioPropietario)
+                @if (RolDeSesion == "Administrador" && IdDeSesion == Model.IdUsuarioPropietario)
                 {
                     <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tab.Id" class="btn btn-info">Editar</a>
                     <a asp-controller="Tablero" asp-action="DeleteTablero" asp-route-idTablero="@tab.Id" onclick="return confirm('¿Estás seguro que quieres eliminar el tablero?')" class="btn btn-outline-danger">Eliminar</a>
