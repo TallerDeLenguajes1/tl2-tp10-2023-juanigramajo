@@ -7,7 +7,9 @@ public interface ITareaRepository
     public Tarea GetById(int id);
     public List<Tarea> List();
     public List<Tarea> ListByUser(int idUser);
-    public List<Tarea> ListByTablero(int idTab);
+    public List<Tarea> ListByTableroYUser(int idTab, int idUser);
+    public List<Tarea> ListByTableroYNOTUser(int idTab, int idUser);
+
     public List<Tarea> CantxEstado(EstadoTarea idTab);
     public void Remove(int id);
     public void Asignar(int idUser, int idTarea);

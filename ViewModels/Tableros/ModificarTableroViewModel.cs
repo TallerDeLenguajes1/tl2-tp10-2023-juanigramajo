@@ -28,6 +28,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
         }
 
         public ModificarTableroViewModel(Tablero tablero){
+            this.Id = tablero.Id;
             this.IdUsuarioPropietario = tablero.IdUsuarioPropietario;
             this.Nombre = tablero.Nombre;
             this.Descripcion = tablero.Descripcion;

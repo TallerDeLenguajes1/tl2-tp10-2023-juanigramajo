@@ -7,10 +7,9 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
 {
     public class ListarTablerosViewModel
     {
-        public List<Tablero> ListadoTableros { get; set; }
         public List<Tablero> ListadoMisTableros { get; set; }
-
         public List<Tablero> ListadoTareasEnOtroTablero { get; set; }
+        public List<Tablero> ListadoOtrosTableros { get; set; }
         public string IdUsuarioPropietario { get; set; }
 
 
@@ -18,10 +17,10 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tableros
             
         }
 
-        public ListarTablerosViewModel(List<Tablero> tableros, List<Tablero> misTableros, List<Tablero> tareasEnOtroTablero, string idUser){
-            this.ListadoTableros = tableros;
+        public ListarTablerosViewModel(List<Tablero> misTableros, List<Tablero> TareasEnOtrosTableros, List<Tablero> otrosTableros, string idUser){
             this.ListadoMisTableros = misTableros;
-            this.ListadoTareasEnOtroTablero = tareasEnOtroTablero;
+            this.ListadoTareasEnOtroTablero = TareasEnOtrosTableros;
+            this.ListadoOtrosTableros = otrosTableros;
             this.IdUsuarioPropietario = idUser;
         }
     }

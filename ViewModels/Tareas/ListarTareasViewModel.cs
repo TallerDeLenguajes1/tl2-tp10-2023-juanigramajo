@@ -8,6 +8,7 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
     public class ListarTareasViewModel
     {
         public List<Tarea> ListadoTareas { get; set; }
+        public List<Tarea> ListadoOtrasTareas { get; set; }
 
 
         public ListarTareasViewModel(){
@@ -16,6 +17,11 @@ namespace tl2_tp10_2023_juanigramajo.ViewModels.Tareas
 
         public ListarTareasViewModel(List<Tarea> tareas){
             this.ListadoTareas = tareas;
+        }
+
+        public ListarTareasViewModel(List<Tarea> misTareas, List<Tarea> otrasTareas){
+            this.ListadoTareas = misTareas;
+            this.ListadoOtrasTareas = otrasTareas;
         }
     }
 }

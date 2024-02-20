@@ -132,7 +132,6 @@ public class TareaRepository : ITareaRepository
         return ListaTareas;
     }
     
-
     
     // Listar todas las tareas asignadas a un usuario específico.(recibe un idUsuario, devuelve un list de tareas)
     public List<Tarea> ListByUser(int idUser)
@@ -172,8 +171,8 @@ public class TareaRepository : ITareaRepository
     }
 
 
-    // Listar todas las tareas de un tablero específico. (recibe un idTablero, devuelve un list de tareas)
-    public List<Tarea> ListByTablero(int idTab)
+    // Listar todas las tareas de un tablero y usuario específico. (recibe un idTablero, devuelve un list de tareas)
+    public List<Tarea> ListByTableroYUser(int idTab, int idUser)
     {
         SqliteConnection connection = new (_cadenaConexion);
 
@@ -181,9 +180,48 @@ public class TareaRepository : ITareaRepository
 
         SqliteCommand command = connection.CreateCommand();
 
-        command.CommandText = "SELECT * FROM Tarea WHERE id_tablero = @idTablero  ";
+        command.CommandText = "SELECT * FROM Tarea WHERE id_tablero = @idTablero AND id_usuario_asignado = @idUsuario";
         command.Parameters.Add(new SqliteParameter("@idTablero", idTab));
-        
+        command.Parameters.Add(new SqliteParameter("@idUsuario", idUser));
+
+
+        connection.Open();
+        using(SqliteDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var tarea = new Tarea();
+                tarea.Id = Convert.ToInt32(reader["id"]);
+                tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                tarea.Nombre = reader["nombre"].ToString();
+                tarea.Estado = (EstadoTarea)Convert.ToInt32(reader["estado"]);
+                tarea.Descripcion = reader["descripcion"].ToString();
+                tarea.Color = reader["color"].ToString();
+                tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
+                ListaTareas.Add(tarea);
+            }
+        }
+        connection.Close();
+
+        if (ListaTareas == null) throw new Exception ($"No se encontraron tareas en la base de datos");
+
+        return ListaTareas;
+    }
+
+
+    // Listar el resto de tareas de un tablero específico que no son del usuario. (recibe un idTablero, devuelve un list de tareas)
+    public List<Tarea> ListByTableroYNOTUser(int idTab, int idUser)
+    {
+        SqliteConnection connection = new (_cadenaConexion);
+
+        List<Tarea> ListaTareas = new List<Tarea>();
+
+        SqliteCommand command = connection.CreateCommand();
+
+        command.CommandText = "SELECT * FROM Tarea WHERE id_tablero = @idTablero AND id_usuario_asignado != @idUsuario";
+        command.Parameters.Add(new SqliteParameter("@idTablero", idTab));
+        command.Parameters.Add(new SqliteParameter("@idUsuario", idUser));
+
 
         connection.Open();
         using(SqliteDataReader reader = command.ExecuteReader())

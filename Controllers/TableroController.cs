@@ -2,20 +2,23 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_juanigramajo.Models;
 using tl2_tp10_2023_juanigramajo.ViewModels.Tableros;
-using tl2_tp10_2023_juanigramajo.ViewModels.Usuarios;
+using tl2_tp10_2023_juanigramajo.ViewModels.Tareas;
 
 namespace tl2_tp10_2023_juanigramajo.Controllers
 {
     public class TableroController : Controller
     {
         private ITableroRepository _repositorioTablero;
+        private ITareaRepository _repositorioTarea;
+
         private readonly ILogger<TableroController> _logger;
 
 
-        public TableroController(ILogger<TableroController> logger, ITableroRepository tableroRepository)
+        public TableroController(ILogger<TableroController> logger, ITableroRepository tableroRepository, ITareaRepository tareaRepository)
         {
             _logger = logger;
             _repositorioTablero = tableroRepository;
+            _repositorioTarea = tareaRepository;
         }
 
 
@@ -32,37 +35,18 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                 string rolUsuario = HttpContext.Session.GetString("Rol");
                 string idUser = HttpContext.Session.GetString("Id");
 
-                if(!isAdmin())
-                {
-                    List<Tablero> ListadoTableros = _repositorioTablero.OthersListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoTareasEnOtroTablero = _repositorioTablero.ListByTareasEnOtroTablero(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, ListadoTareasEnOtroTablero, idUser);
+                List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
+                List<Tablero> ListadoTareasEnOtroTablero = _repositorioTablero.ListByTareasEnOtroTablero(Convert.ToInt32(idUser));
+                List<Tablero> ListadoOtrosTableros = _repositorioTablero.RestoDeTablerosListByUser(Convert.ToInt32(idUser));
+                ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoMisTableros, ListadoTareasEnOtroTablero, ListadoOtrosTableros, idUser);
 
-                    if (ListadoTableros != null)
-                    {
-                        return View(listarTablerosVM);
-                    }
-                    else
-                    {
-                        return BadRequest();
-                    }
-                } 
-                else 
+                if (ListadoMisTableros != null)
                 {
-                    List<Tablero> ListadoTableros = _repositorioTablero.OthersListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoMisTableros = _repositorioTablero.ListByUser(Convert.ToInt32(idUser));
-                    List<Tablero> ListadoTareasEnOtroTablero = _repositorioTablero.ListByTareasEnOtroTablero(Convert.ToInt32(idUser));
-                    ListarTablerosViewModel listarTablerosVM = new ListarTablerosViewModel(ListadoTableros, ListadoMisTableros, ListadoTareasEnOtroTablero, idUser);
-
-                    if (ListadoTableros != null)
-                    {
-                        return View(listarTablerosVM);
-                    }
-                    else
-                    {
-                        return BadRequest();
-                    }
+                    return View(listarTablerosVM);
+                }
+                else
+                {
+                    return BadRequest();
                 }
             }
             catch (Exception ex)
@@ -77,6 +61,42 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
 
 
         [HttpGet]
+        public IActionResult ListByTablero(int idTablero)
+        {
+            try
+            {
+                if (!isLogged())
+                {
+                    TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
+                    return RedirectToRoute(new { controller = "Login", action = "Index" });
+                }
+                
+                var idUser = HttpContext.Session.GetString("Id");
+                List<Tarea> ListadoMisTareas = _repositorioTarea.ListByTableroYUser(idTablero, Convert.ToInt32(idUser));
+                List<Tarea> ListadoOtrasTareas = _repositorioTarea.ListByTableroYNOTUser(idTablero, Convert.ToInt32(idUser));
+                ListarTareasViewModel ListarTareasVM = new ListarTareasViewModel(ListadoMisTareas, ListadoOtrasTareas);
+
+                if (ListadoMisTareas != null)
+                {
+                    return View(ListarTareasVM);
+                }
+                else
+                {
+                    return BadRequest();
+                }                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                TempData["ErrorMessage"] = ex.Message;
+                TempData["StackTrace"] = ex.StackTrace;
+                return RedirectToAction("Error");
+            }
+        }
+
+
+
+        [HttpGet]
         public IActionResult CrearTablero()
         {   try
             {
@@ -85,11 +105,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if(!isAdmin())
+                // Todos pueden crear tableros
+                /* if(!isAdmin())
                 {   
                     TempData["ErrorMessage"] = "No tienes permisos para crear un tablero";
                     return RedirectToAction("Index");
-                }
+                } */
 
                 return View(new CrearTableroViewModel(Convert.ToInt32(HttpContext.Session.GetString("Id"))));                
             }
@@ -113,11 +134,12 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if(!isAdmin())
+                // Todos pueden crear tableros
+                /* if(!isAdmin())
                 {   
                     TempData["ErrorMessage"] = "No tienes permisos para crear un tablero";
                     return RedirectToAction("Index");
-                }
+                } */
                 if(!ModelState.IsValid) return RedirectToAction("CrearTablero");
 
 
@@ -146,7 +168,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if(!isAdmin())
+                if(!isAdmin() && !(_repositorioTablero.GetById(idTablero).IdUsuarioPropietario == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {   
                     TempData["ErrorMessage"] = "No tienes permisos para editar un tablero";
                     return RedirectToAction("Index");
@@ -176,7 +198,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if(!isAdmin())
+                if(!isAdmin() && !(_repositorioTablero.GetById(modificarTableroVM.Id).IdUsuarioPropietario == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {   
                     TempData["ErrorMessage"] = "No tienes permisos para editar un tablero";
                     return RedirectToAction("Index");
@@ -207,7 +229,7 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     TempData["ErrorMessage"] = "Debes iniciar sesión para acceder a esta sección.";
                     return RedirectToRoute(new { controller = "Login", action = "Index" });
                 }
-                if(!isAdmin())
+                if(!isAdmin() && !(_repositorioTablero.GetById(idTablero).IdUsuarioPropietario == Convert.ToInt32(HttpContext.Session.GetString("Id"))))
                 {   
                     TempData["ErrorMessage"] = "No tienes permisos para eliminar un tablero";
                     return RedirectToAction("Index");

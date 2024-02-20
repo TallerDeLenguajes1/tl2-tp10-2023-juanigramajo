@@ -20,3 +20,30 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Para que las tarjetas se distribuyan uniformemente en el contenedor */
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+.card {
+  flex: 0 1 calc(33.33% - 20px); /* Tamaño de las tarjetas (33.33% del ancho del contenedor menos el espacio entre ellas) */
+  /* width: 18rem; */ /* Ya no es necesario especificar un ancho fijo */
+}
+
+.container-1 {
+  background-color: #FF5733; /* Color para el primer contenedor */
+  padding: 1rem;
+}
+
+.container-2 {
+  background-color: #33FF57; /* Color para el segundo contenedor */
+  padding: 1rem;
+}
+
+.container-3 {
+  background-color: #5733FF; /* Color para el tercer contenedor */
+  padding: 1rem;
+}

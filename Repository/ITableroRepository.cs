@@ -8,6 +8,6 @@ public interface ITableroRepository
     public List<Tablero> List();
     public List<Tablero> ListByUser(int id);
     List<Tablero> ListByTareasEnOtroTablero(int idUser);
-    public List<Tablero> OthersListByUser(int id);
+    public List<Tablero> RestoDeTablerosListByUser(int id);
     public void Remove(int id);
 }

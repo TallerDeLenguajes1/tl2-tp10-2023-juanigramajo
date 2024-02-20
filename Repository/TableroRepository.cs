@@ -20,7 +20,6 @@ public class TableroRepository : ITableroRepository
             connection.Open();
             var command = new SqliteCommand(query, connection);
 
-            // la consigna pedía asumir que el usuario propietario es el mismo, por eso envío un 1
             command.Parameters.Add(new SqliteParameter("@idUserProp", IdPropietario));
             command.Parameters.Add(new SqliteParameter("@nombre", tab.Nombre));
             command.Parameters.Add(new SqliteParameter("@desc", tab.Descripcion));
@@ -193,7 +192,7 @@ public class TableroRepository : ITableroRepository
 
 
     // Listar todos los tableros que NO son de un usuario específico. (recibe un IdUsuario, devuelve un list de tableros).
-    public List<Tablero> OthersListByUser(int idUser)
+    public List<Tablero> RestoDeTablerosListByUser(int idUser)
     {
         SqliteConnection connection = new (_cadenaConexion);
 
@@ -201,12 +200,9 @@ public class TableroRepository : ITableroRepository
 
         SqliteCommand command = connection.CreateCommand();
 
-        command.CommandText = "SELECT * FROM Tarea t" +
-                            "INNER JOIN Tablero tab ON (tab.id = id_tablero)" +
-                            "WHERE id_usuario_propietario != @idUser AND id_tablero NOT IN (SELECT id FROM Tablero WHERE id_usuario_propietario != @idUser)";
-        
-        
-        command.Parameters.Add(new SqliteParameter("@idUser", idUser));
+
+        command.CommandText = "SELECT * FROM Tablero WHERE id_usuario_propietario != @idUsuario";
+        command.Parameters.Add(new SqliteParameter("@idUsuario", idUser));
         
 
         connection.Open();
