@@ -14,9 +14,11 @@
     </div>
 }
 
+<a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="CrearTablero">Crear tablero</a>
+
 <h2>Mis Tableros</h2>
 
-<div class="card-container container-1">
+<div class="tablerosConteiner container-1">
     @foreach (var tab in Model.ListadoMisTableros)
     {
         <div class="card" style="width: 18rem;">
@@ -43,9 +45,10 @@
     }
 </div>
 
+
 <h2>Mis tareas en otros tableros</h2>
 
-<div class="card-container container-2">
+<div class="tablerosConteiner container-2">
     @foreach (var tab in Model.ListadoTareasEnOtroTablero)
     {
         <div class="card" style="width: 18rem;">
@@ -72,9 +75,10 @@
     }
 </div>
 
+
 <h2>Explorar más tableros</h2>
 
-<div class="card-container container-3">
+<div class="tablerosConteiner container-3">
     @foreach (var tab in Model.ListadoOtrosTableros)
     {
         <div class="card" style="width: 18rem;">

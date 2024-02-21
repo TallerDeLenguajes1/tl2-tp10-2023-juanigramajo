@@ -21,16 +21,33 @@ body {
   margin-bottom: 60px;
 }
 
-.card-container {
+.contentTablero {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: #ab6758;
+  margin-bottom: 1em;
+}
+
+.tablerosConteiner {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between; /* Para que las tarjetas se distribuyan uniformemente en el contenedor */
   gap: 20px; /* Espacio entre las tarjetas */
 }
 
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para que las tarjetas se distribuyan uniformemente en el contenedor */
+  gap: 20px; /* Espacio entre las tarjetas */
+  width: 15rem;
+  margin: 1em;
+}
+
 .card {
-  flex: 0 1 calc(33.33% - 20px); /* Tamaño de las tarjetas (33.33% del ancho del contenedor menos el espacio entre ellas) */
-  /* width: 18rem; */ /* Ya no es necesario especificar un ancho fijo */
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
 }
 
 .container-1 {

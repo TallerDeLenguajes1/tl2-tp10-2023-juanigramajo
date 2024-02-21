@@ -25,41 +25,45 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @* <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li> *@
+
+                        @if(!string.IsNullOrEmpty(IdDeSesion) && !string.IsNullOrEmpty(NombreDeSesion) && !string.IsNullOrEmpty(RolDeSesion)) {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            @* <li class="nav-item"> 
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li> *@
+
+                                @if(RolDeSesion == "Administrador") {
+                                    <li class="nav-item"> 
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Listado de usuarios</a>
+                                    </li>
+                                }
+
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="CrearUsuario">Crear usuario</a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="Index">Listado de tableros</a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="CrearTablero">Crear tablero</a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="Index">Listado de tareas</a>
+                                </li>
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="CrearTarea">Crear tarea</a>
+                                </li>
+
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                        }
 
                         @if(string.IsNullOrEmpty(IdDeSesion) && string.IsNullOrEmpty(NombreDeSesion) && string.IsNullOrEmpty(RolDeSesion)) {
                             <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                            </li>
-                        }
-
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Listado de usuarios</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="CrearUsuario">Crear usuario</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="Index">Listado de tableros</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tablero" asp-action="CrearTablero">Crear tablero</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="Index">Listado de tareas</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tarea" asp-action="CrearTarea">Crear tarea</a>
-                        </li>
-
-                        @if(!string.IsNullOrEmpty(IdDeSesion) && !string.IsNullOrEmpty(NombreDeSesion) && !string.IsNullOrEmpty(RolDeSesion)) {
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                             </li>
                         }
                     </ul>

@@ -27,8 +27,8 @@
 - En vez de escribir las funciones isLogger e isAdmin en cada controller usar un helper, en una clase estática.
 - Que pide required en formularios cuando no esta solicitado en el viewmodel
 - Hacer funcion Login en Usuario Repository (??)
-- Listar segun estado de tareas
-- Poder tener tareas asignadas a mas usuarios
+- Poder tener tareas asignadas a mas usuarios (?)
+- Que no se puedan crear usuarios tableros y tareas ya existentes
 
 
 ---

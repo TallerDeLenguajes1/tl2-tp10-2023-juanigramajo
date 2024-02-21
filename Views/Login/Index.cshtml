@@ -29,8 +29,14 @@
             @TempData["MensajeError"]
         </div>
 
+        <h6>¿Aún no esta registrado?</h6>
+        <a asp-controller="Usuario" asp-action="CrearUsuario" class="btn btn-outline-info">Crear usuario</a>
+    } else {
+        <h6>¿Aún no esta registrado?</h6>
         <a asp-controller="Usuario" asp-action="CrearUsuario" class="btn btn-outline-info">Crear usuario</a>
     }
 </form>
+
+
 
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }
