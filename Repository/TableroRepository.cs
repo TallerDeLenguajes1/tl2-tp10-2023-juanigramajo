@@ -37,15 +37,15 @@ public class TableroRepository : ITableroRepository
     // Modificar un tablero existente. (recibe un id y un objeto Tablero).
     public void Update(int id, Tablero tablero)
     {
-        var query = $"UPDATE Tablero SET nombre = @nombre, descripcion = @desc WHERE id = @idcambiar;";
+        var query = $"UPDATE Tablero SET nombre = @nombre, descripcion = @desc, id_usuario_propietario = @idUserProp WHERE id = @idcambiar;";
         using (SqliteConnection connection = new (_cadenaConexion))
         {
             connection.Open();
             var command = new SqliteCommand(query, connection);
 
-            // command.Parameters.Add(new SQLiteParameter("@idUserProp", tablero.IdUsuarioPropietario));
             command.Parameters.Add(new SqliteParameter("@nombre", tablero.Nombre));
             command.Parameters.Add(new SqliteParameter("@desc", tablero.Descripcion));
+            command.Parameters.Add(new SqliteParameter("@idUserProp", tablero.IdUsuarioPropietario));
             command.Parameters.Add(new SqliteParameter("@idcambiar", id));
 
             var commandENonQ = command.ExecuteNonQuery();

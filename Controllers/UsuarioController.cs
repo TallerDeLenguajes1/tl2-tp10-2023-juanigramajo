@@ -9,12 +9,18 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IUsuarioRepository _repositorioUsuario;
+        private readonly ITareaRepository _repositorioTarea;
+        private readonly ITableroRepository _repositorioTablero;
 
 
-        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository)
+
+
+        public UsuarioController(ILogger<UsuarioController> logger, IUsuarioRepository usuarioRepository, ITareaRepository tareaRepository, ITableroRepository tableroRepository)
         {
             _logger = logger;
             _repositorioUsuario = usuarioRepository;
+            _repositorioTarea = tareaRepository;
+            _repositorioTablero = tableroRepository;
         }
 
 
@@ -167,6 +173,21 @@ namespace tl2_tp10_2023_juanigramajo.Controllers
                     return RedirectToAction("Index");
                 }
 
+                List<Tarea> ListadoTareas = _repositorioTarea.ListByUser(idUsuario);
+                foreach (var tarea in ListadoTareas)
+                {
+                    tarea.IdUsuarioAsignado = -1;
+                    _repositorioTarea.Update(tarea.Id, tarea);
+                }
+
+                List<Tablero> ListadoTableros = _repositorioTablero.ListByUser(idUsuario);
+
+                foreach (var tablero in ListadoTableros)
+                {
+                    tablero.IdUsuarioPropietario = -1;
+                    _repositorioTablero.Update(tablero.Id, tablero);
+                }
+                
                 _repositorioUsuario.Remove(idUsuario);
 
                 return RedirectToAction("Index");                
